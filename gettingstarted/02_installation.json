@@ -20,7 +20,7 @@
     "id" : 2,
     "compiler" : "markdown",
     "input" : {
-      "code" : "To use Wolfe in an [sbt](http://www.scala-sbt.org/) project add the following lines\nto your `build.sbt` file (in case of a Build class adapt accordingly).\n```\n resolvers += \"Wolfe Release\" at \n   \"http://homeniscient.cs.ucl.ac.uk:8081/nexus/content/repositories/releases\"\n   \n libraryDependencies += \"ml.wolfe\" %% \"wolfe-core\" % \"[VERSION]\"\n```\nThe newest version can be read (and downloaded) from the \n[release list](https://github.com/wolfe-pack/wolfe/releases).\n",
+      "code" : "To use Wolfe in an [sbt](http://www.scala-sbt.org/) project add the following lines\nto your `build.sbt` file (in case of a Build class adapt accordingly).\n\n```\n resolvers += \"Wolfe Release\" at \n   \"http://homeniscient.cs.ucl.ac.uk:8081/nexus/content/repositories/releases\"\n   \n libraryDependencies += \"ml.wolfe\" %% \"wolfe-core\" % \"[VERSION]\"\n```\n\nThe newest version can be read (and downloaded) from the \n[release list](https://github.com/wolfe-pack/wolfe/releases).\n",
       "outputFormat" : "html",
       "extraFields" : null
     }
