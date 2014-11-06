@@ -52,7 +52,7 @@
     "id" : 6,
     "compiler" : "markdown",
     "input" : {
-      "code" : "If you like to extend Wolfe clone or fork it from [here](https://github.com/wolfe-pack/wolfe). \nTo build Wolfe and publish your version to your local ivy directory, cd into \nthe Wolfe home directory and type\n```\n$ sbt publish-local\n```\n",
+      "code" : "If you would like to extend Wolfe, clone or fork it from [here](https://github.com/wolfe-pack/wolfe). \nTo build Wolfe and publish your version to your local ivy directory, cd into \nthe Wolfe home directory and type\n```\n$ sbt publish-local\n```\n",
       "outputFormat" : "html",
       "extraFields" : { }
     }
