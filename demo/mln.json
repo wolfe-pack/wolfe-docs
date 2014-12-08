@@ -1,0 +1,21 @@
+{
+  "name" : "Statistical Relational Learning Using MLNs",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "scala",
+    "input" : {
+      "code" : "import org.sameersingh.htmlgen.D3jsConverter.Implicits._\n\ncase class Person(name: String, smokes: Boolean, cancer: Boolean)\n\nval a = Person(\"Anna\", true, false)\nval b = Person(\"Bob\", true, false)\nval c = Person(\"Charlie\", true, false)\nval d = Person(\"Dan\", true, false)\n\nval g = Graph.nodeDesc(Seq(a,b,c,d).map(n => n.name -> n), Seq(0->1, 1->2, 2->3, 2->0))\ng",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 1,
+    "compiler" : "scala",
+    "input" : {
+      "code" : "import org.sameersingh.htmlgen.D3jsConverter.Implicits._\n\nAnimation(Seq(\"training\" -> g, \"test\" -> Map(0 -> 12, 1-> \"Sameer\")))",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  } ],
+  "config" : { }
+}
