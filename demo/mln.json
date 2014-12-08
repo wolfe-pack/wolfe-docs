@@ -12,7 +12,7 @@
     "id" : 1,
     "compiler" : "scala",
     "input" : {
-      "code" : "import org.sameersingh.htmlgen.D3jsConverter.Implicits._\n\nAnimation(Seq(\"training\" -> g, \"test\" -> Map(0 -> 12, 1-> \"Sameer\")))",
+      "code" : "import org.sameersingh.htmlgen.D3jsConverter.Implicits._\n\nAnimation(\"training\" -> g, \"test\" -> Map(0 -> 12, 1-> \"Sameer\"))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
