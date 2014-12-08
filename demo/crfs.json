@@ -1,5 +1,37 @@
 {
   "name" : "Sequence Tagging with CRFs",
-  "cells" : [ ],
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "val corpus = \"/Users/sriedel/corpora/conll03/eng.train\"\nval train = ml.wolfe.nlp.io.CoNLLReader.asDocs(corpus,\" \").take(100).toSeq\nval labels = train.flatMap(_.entityMentionsAsBIOSeq).distinct\nval doc = train(1)\nBratRenderer.bratIE(doc)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 1,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "doc.sentences.head.entityMentionsAsBIOSeq.mkString(\" \")",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 2,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "def feats(words:Seq[String])(ner:Seq[String]) = \n  sum(0 until words.size) { i => oneHot(ner(i))} + \n  sum(0 until words.size) { i => oneHot(words(i) -> ner(i))} +\n  sum(0 until words.size - 1) {i => oneHot(ner(i) -> ner(i+1))}\nfeats(doc.tokenWords)(doc.entityMentionsAsBIOSeq)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 3,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "def space(words:Seq[String]) = seqsOfLength(words.length,labels)\ndef crf(weights:Vector,words:Seq[String])(ner:Seq[String]) = \n  weights dot feats(words)(ner)\ndef condLikelihood(weights:Vector,words:Seq[String])(gold:Seq[String]) =\n  logZ(space(words))(crf(weights,words)) - crf(weights,words)(gold)\n  \n  ",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  } ],
   "config" : { }
 }
