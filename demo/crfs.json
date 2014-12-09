@@ -1,5 +1,61 @@
 {
   "name" : "Sequence Tagging with CRFs",
-  "cells" : [ ],
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "val corpus = \"/Users/sriedel/corpora/conll03/eng.train\"\nval train = ml.wolfe.nlp.io.CoNLLReader.asDocs(corpus,\" \").take(100).toSeq\nval labels = train.flatMap(_.entityMentionsAsBIOSeq).distinct\nval doc = train(1)\nBratRenderer.bratIE(doc)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 1,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "doc.sentences.head.entityMentionsAsBIOSeq.mkString(\" \")",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 2,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "type X = Seq[String]\ntype Y = Seq[String]\ndef feats(words:X)(ner:Y) = \n  sum(0 until words.size) { i => oneHot(ner(i))} + \n  sum(0 until words.size) { i => oneHot(words(i) -> ner(i))} +\n  sum(0 until words.size - 1) {i => oneHot(ner(i) -> ner(i+1))}\nfeats(doc.tokenWords)(doc.entityMentionsAsBIOSeq)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 3,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "def space(words:X) = seqsOfLength(words.length,labels)\n@OutputFactorGraph\ndef crf(weights:Vector,words:X)(ner:Y) = \n  weights dot feats(words)(ner)\ndef instanceCondLikelihood(weights:Vector,words:X)(gold:Y) =\n  crf(weights,words)(gold) - logZ(space(words))(crf(weights,words))  \ndef condLikelihood(data:Seq[(X,Y)])(weights:Vector) =\n  sum(data)(d => instanceCondLikelihood(weights,d._1)(d._2))\n  \nval seqTrain = train.map(d => (d.tokenWords,d.entityMentionsAsBIOSeq))\nval weights = argmax(vectors){condLikelihood(seqTrain)}\nweights.take(10)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 4,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "def predict(weights:Vector, words:X) = \n  argmax(space(words))(crf(weights,words))\n  \nval output = predict(weights, Seq(\"EU\",\"rejects\",\"John\",\"call\",\".\")) \noutput",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 5,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "FactorGraphBuffer.get",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 6,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "Blah",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  } ],
   "config" : { }
 }
