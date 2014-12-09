@@ -70,7 +70,7 @@
     "id" : 8,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "val l_w = 1.0\nvar g_w = 0.5\ndef local(x: Image)(y: Image) = sum(pixels){p => l_w * I(x(p) == y(p))}\ndef vert(y: Image) = \n  sum(0 until w-1){i => sum(0 until h){j => g_w * I(y(i, j) == y(i+1, j))}}\ndef horz(y: Image) = \n  sum(0 until w){i => sum(0 until h-1){j => g_w * I(y(i, j) == y(i, j+1))}}\n@OptimizeByInference(BeliefPropagation.maxProduct(10))\ndef grid(x: Image)(y: Image) = local(x)(y) + vert(y) + horz(y)\ngrid(noisy)(truth)",
+      "code" : "val l_w = 1.0\nvar g_w = 0.5\ndef local(x: Image)(y: Image) = sum(pixels){p => l_w * I(x(p) == y(p))}\ndef vert(y: Image) = \n  sum(0 until w-1){i => sum(0 until h){j => g_w * I(y(i, j) == y(i+1, j))}}\ndef horz(y: Image) = \n  sum(0 until w){i => sum(0 until h-1){j => g_w * I(y(i, j) == y(i, j+1))}}\n@OptimizeByInference(BeliefPropagation.maxProduct(10))\n@LogZByInference(BeliefPropagation.sumProduct(10))\ndef grid(x: Image)(y: Image) = local(x)(y) + vert(y) + horz(y)\ngrid(noisy)(truth)",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -94,7 +94,7 @@
     "id" : 11,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "def images = maps(pixels, bools)\nval mpe = argmax(images) { grid(noisy) }\nimg2HTML(mpe)\naccuracy(mpe)\nval globals = (-1.0 to 1.0 by 0.125)\nxyChart((globals, globals.map(g => {\n    g_w = g;\n    accuracy(argmax(images) { grid(noisy) })\n})))",
+      "code" : "def images = maps(pixels, bools)\nval mpe = argmax(images) { grid(noisy) }\nimg2HTML(mpe)\naccuracy(mpe)\nval globals = (-0.5 to 1.5 by 0.1)\nD3Plotter.lineplot(xyChart((globals, globals.map(g => {\n    g_w = g;\n    accuracy(argmax(images) { grid(noisy) })\n}))))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -103,6 +103,14 @@
     "compiler" : "wolfe",
     "input" : {
       "code" : "def stats(y: Image) = sum(pixels) { p => oneHot(p, I(y(p))) }\nval mu = expect(images) { grid(noisy) } { stats }\nvec2HTML(mu)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 15,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "val mu_globals = (-0.5 to 1.5 by 0.25)\nAnimation(mu_globals.map(g => {\n    g_w = g;\n    val mu = expect(images) { grid(noisy) } { stats }\n    g.toString -> vec2HTML(mu)\n}):_*)",
       "outputFormat" : "html",
       "extraFields" : { }
     }
