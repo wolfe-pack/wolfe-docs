@@ -2,17 +2,41 @@
   "name" : "Statistical Relational Learning Using MLNs",
   "cells" : [ {
     "id" : 0,
-    "compiler" : "scala",
+    "compiler" : "wolfe",
     "input" : {
-      "code" : "import org.sameersingh.htmlgen.D3jsConverter.Implicits._\n\ncase class Person(name: String, smokes: Boolean, cancer: Boolean)\n\nval a = Person(\"Anna\", true, false)\nval b = Person(\"Bob\", true, false)\nval c = Person(\"Charlie\", true, false)\nval d = Person(\"Dan\", true, false)\n\nval g = Graph.nodeDesc(Seq(a,b,c,d).map(n => n.name -> n), Seq(0->1, 1->2, 2->3, 2->0))\ng",
+      "code" : "import org.sameersingh.htmlgen.D3jsConverter.Implicits._\nval random = new scala.util.Random()\n\ncase class World(friends: Pred[(Symbol, Symbol)],smokes: Pred[Symbol], cancer: Pred[Symbol])\nimplicit def persons = List('Anna, 'Bob)\ndef worlds = all(World)\nval w = worlds(random.nextInt(worlds.length))\nGraph.fromPreds[Symbol](persons, (x,y) => w.friends(x -> y), \n        groups=(a:Symbol)=> (if(w.smokes(a)) 2 else 0)+(if(w.cancer(a)) 1 else 0))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
   }, {
     "id" : 1,
-    "compiler" : "scala",
+    "compiler" : "wolfe",
     "input" : {
-      "code" : "import org.sameersingh.htmlgen.D3jsConverter.Implicits._\n\nAnimation(\"training\" -> g, \"test\" -> Map(0 -> 12, 1-> \"Sameer\"))",
+      "code" : "def mln(world: World) = {\n  import world._\n  sum(persons) { p => \n    1.5 * I(smokes(p) --> cancer(p)) } +\n  sum(persons) { p1 => sum(persons) { p2 => \n    1.1 * I(friends(p1, p2) --> (smokes(p1) == smokes(p2))) } }\n}\nmln(worlds.head)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 2,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "Animation(worlds.map(w => mln(w).toString -> Graph.fromPreds[Symbol](persons, (x,y) => w.friends(x -> y), \n        groups=(a:Symbol)=> (if(w.smokes(a)) 2 else 0)+(if(w.cancer(a)) 1 else 0))):_*)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 3,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "def evidence(world: World) = world.smokes('Anna) && world.friends('Anna, 'Bob)\ndef query(world: World) = oneHot(world.cancer('Bob))\nval mu = expect(worlds where evidence) { mln } { query }\nml.wolfe.D3Implicits.barChart(mu)\nFactorGraphBuffer.get",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 4,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "def cancerq(w: World) = sum(persons) { p => oneHot(p,I(w.cancer(p))) }\nval cancermu = expect(worlds where evidence) { mln } { cancerq }\ndef smokesq(w: World) = sum(persons) { p => oneHot(p,I(w.smokes(p))) }\nval smokesmu = expect(worlds where evidence) { mln } { smokesq }\ndef friendsq(w: World) = sum(persons) { p1 => \n    sum(persons) { p2 => oneHot(p1->p2,I(w.friends(p1,p2))) }}\nval friendsmu = expect(worlds where evidence) { mln } { friendsq }\nAnimation(\"Smokes\" -> Graph.fromPreds[Symbol](persons, (x,y) => true, \n        values = p => smokesmu(p)),\n            \"Cancer\" ->Graph.fromPreds[Symbol](persons, (x,y) => true, \n        values = p => cancermu(p)))",
       "outputFormat" : "html",
       "extraFields" : { }
     }

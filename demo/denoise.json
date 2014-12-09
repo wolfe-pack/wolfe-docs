@@ -46,7 +46,7 @@
     "id" : 5,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "import org.sameersingh.htmlgen.DivConverter.Implicits._\ntype Image = Map[(Int, Int), Boolean]\n\n// image loading code\nval img = imageURLToMatrix(\"http://www.vectortemplates.com/raster/batman-logo.gif\")\nval binary = Matrix(img.data.map(_.map(_ > 0.5)))(I)\nval w = img.data.length\nval h = img.data.head.length\ndef rows = (0 until w)\ndef cols = (0 until h)\ndef pixels = (0 until w) x (0 until h)\ndef img2HTML(img:Image) = Matrix(rows map (i => cols map(j => img(i,j))))(I)\ndef vec2HTML(vec:Vector) = Matrix(rows map (i => cols map(j => vec(i->j))))\ndef mat2Image(m:Matrix[Boolean]) = m.data.zipWithIndex.flatMap(ri => ri._1.zipWithIndex.map(cj => (ri._2, cj._2) -> cj._1)).toMap\nval truth = mat2Image(binary)\n\n// add noise\nval rand = new scala.util.Random(0)\nval nlevel = 0.1    \nval noisy = truth.map(pv => pv._1 -> (if(rand.nextDouble < nlevel) !pv._2 else pv._2)).toMap\n// display image\nMap(\"truth\" -> img2HTML(truth), \"noisy\" -> img2HTML(noisy))",
+      "code" : "type Image = Map[(Int, Int), Boolean]\n\n// image loading code\nval img = imageURLToMatrix(\"http://www.vectortemplates.com/raster/batman-logo.gif\")\nval binary = Matrix(img.data.map(_.map(_ > 0.5)))(I)\nval w = img.data.length\nval h = img.data.head.length\ndef rows = (0 until w)\ndef cols = (0 until h)\ndef pixels = (0 until w) x (0 until h)\ndef img2HTML(img:Image) = Matrix(rows map (i => cols map(j => img(i,j))))(I)\ndef vec2HTML(vec:Vector) = Matrix(rows map (i => cols map(j => vec(i->j))))\ndef mat2Image(m:Matrix[Boolean]) = m.data.zipWithIndex.flatMap(ri => ri._1.zipWithIndex.map(cj => (ri._2, cj._2) -> cj._1)).toMap\nval truth = mat2Image(binary)\ndef accuracy(img: Image) = pixels.map(p => I(truth(p)==img(p))).sum\n// add noise\nval rand = new scala.util.Random(0)\nval nlevel = 0.1    \nval noisy = truth.map(pv => pv._1 -> (if(rand.nextDouble < nlevel) !pv._2 else pv._2)).toMap\n// display image\nAnimation(\"truth\" -> img2HTML(truth), \"noisy\" -> img2HTML(noisy))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -70,7 +70,7 @@
     "id" : 8,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "val l_w = 1.0\nval g_w = 0.5\ndef local(x: Image)(y: Image) = sum(pixels){p => l_w * I(x(p) == y(p))}\ndef vert(y: Image) = \n  sum(0 until w-1){i => sum(0 until h){j => g_w * I(y(i, j) == y(i+1, j))}}\ndef horz(y: Image) = \n  sum(0 until w){i => sum(0 until h-1){j => g_w * I(y(i, j) == y(i, j+1))}}\ndef grid(x: Image)(y: Image) = local(x)(y) + vert(y) + horz(y)\ngrid(noisy)(truth)",
+      "code" : "val l_w = 1.0\nvar g_w = 0.5\ndef local(x: Image)(y: Image) = sum(pixels){p => l_w * I(x(p) == y(p))}\ndef vert(y: Image) = \n  sum(0 until w-1){i => sum(0 until h){j => g_w * I(y(i, j) == y(i+1, j))}}\ndef horz(y: Image) = \n  sum(0 until w){i => sum(0 until h-1){j => g_w * I(y(i, j) == y(i, j+1))}}\n@OptimizeByInference(BeliefPropagation.maxProduct(10))\ndef grid(x: Image)(y: Image) = local(x)(y) + vert(y) + horz(y)\ngrid(noisy)(truth)",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -94,12 +94,12 @@
     "id" : 11,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "def images = maps(pixels, bools)\nval mpe = argmax(images) { grid(noisy) }\nimg2HTML(mpe)",
+      "code" : "def images = maps(pixels, bools)\nval mpe = argmax(images) { grid(noisy) }\nimg2HTML(mpe)\naccuracy(mpe)\nval globals = (-1.0 to 1.0 by 0.125)\nxyChart((globals, globals.map(g => {\n    g_w = g;\n    accuracy(argmax(images) { grid(noisy) })\n})))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
   }, {
-    "id" : 14,
+    "id" : 12,
     "compiler" : "wolfe",
     "input" : {
       "code" : "def stats(y: Image) = sum(pixels) { p => oneHot(p, I(y(p))) }\nval mu = expect(images) { grid(noisy) } { stats }\nvec2HTML(mu)",
@@ -107,7 +107,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 12,
+    "id" : 13,
     "compiler" : "section",
     "input" : {
       "code" : "thanks",
@@ -115,7 +115,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 13,
+    "id" : 14,
     "compiler" : "heading1",
     "input" : {
       "code" : "Thank you!",
