@@ -1,0 +1,173 @@
+{
+  "name" : "A Visual and Interactive IDE for Probabilistic Programming",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "#### **Sameer Singh**, Luke Hewitt, Tim Rockatschel, **Sebastian Riedel**",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 1,
+    "compiler" : "section",
+    "input" : {
+      "code" : "ide",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 2,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Goals of an IDE\n- Read\n- Eval\n- Println",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 3,
+    "compiler" : "section",
+    "input" : {
+      "code" : "ideppl",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 4,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Visualizations for a PPL-IDE\n- Structed Data\n- Graphical Model\n- State of Inference\n- Output of Inference",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 5,
+    "compiler" : "section",
+    "input" : {
+      "code" : "structured_nlp",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 6,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Structured Data: NLP\n",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 7,
+    "compiler" : "section",
+    "input" : {
+      "code" : "structured_graphs",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 8,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Structured Data: Graphs\n",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 9,
+    "compiler" : "section",
+    "input" : {
+      "code" : "structured_matrices",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 10,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Structured Data: Matrices\n",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 11,
+    "compiler" : "section",
+    "input" : {
+      "code" : "graphical_model",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 12,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Graphical Model\n",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 13,
+    "compiler" : "section",
+    "input" : {
+      "code" : "inference",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 14,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Inference",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 15,
+    "compiler" : "section",
+    "input" : {
+      "code" : "output",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 16,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Output: Structure Marginals\n",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 17,
+    "compiler" : "section",
+    "input" : {
+      "code" : "output_plots",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 18,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Output: Plots\n",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 19,
+    "compiler" : "section",
+    "input" : {
+      "code" : "future",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 20,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Future Work\n\n- Plate Models\n- Model/Objective Equations\n",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  } ],
+  "config" : { }
+}
