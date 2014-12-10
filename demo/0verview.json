@@ -4,7 +4,7 @@
     "id" : 0,
     "compiler" : "markdown",
     "input" : {
-      "code" : "#### **Sameer Singh**, Luke Hewitt, Tim Rockatschel, **Sebastian Riedel**",
+      "code" : "#### **Sameer Singh**, Luke Hewitt, Tim Rocktaschel, **Sebastian Riedel**",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -36,7 +36,7 @@
     "id" : 4,
     "compiler" : "markdown",
     "input" : {
-      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Visualizations for a PPL-IDE\n- Structed Data\n- Graphical Model\n- State of Inference\n- Output of Inference",
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Visualizations for a PPL-IDE\n- Structured Data\n- Graphical Model\n- State of Inference\n- Output of Inference",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -74,6 +74,14 @@
     }
   }, {
     "id" : 9,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "def persons = List('Anna, 'Bob, 'Charlie, 'Dan, 'Egon)\nval friends = Set(('Anna, 'Bob),('Bob, 'Dan),('Bob, 'Egon))\nGraph.fromPreds[Symbol](persons, (x,y) => friends(x -> y))",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 10,
     "compiler" : "section",
     "input" : {
       "code" : "structured_matrices",
@@ -81,7 +89,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 10,
+    "id" : 11,
     "compiler" : "markdown",
     "input" : {
       "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Structured Data: Matrices\n",
@@ -89,18 +97,10 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 11,
-    "compiler" : "section",
-    "input" : {
-      "code" : "graphical_model",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
     "id" : 12,
-    "compiler" : "markdown",
+    "compiler" : "wolfe",
     "input" : {
-      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Graphical Model\n",
+      "code" : "val random = new scala.util.Random()\nMatrix((0 until 10).map(i => (0 until 10).map(j => (i+j)+2*random.nextDouble())))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -108,7 +108,7 @@
     "id" : 13,
     "compiler" : "section",
     "input" : {
-      "code" : "inference",
+      "code" : "graphical_model",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -116,12 +116,20 @@
     "id" : 14,
     "compiler" : "markdown",
     "input" : {
-      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Inference",
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Model and Inference\n",
       "outputFormat" : "html",
       "extraFields" : { }
     }
   }, {
     "id" : 15,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "implicit def peeps = List('Anna, 'Bob, 'Charlie)\ncase class World(smokes: Pred[Symbol])\ndef mln(world: World) = {\n  sum(peeps) { p => -1.0 * I(world.smokes(p)) } +\n  sum(peeps) { p1 => sum(peeps) { p2 => 1.0 * I(friends(p1, p2) --> (world.smokes(p1) == world.smokes(p2))) } }\n} \nval mu = expect(all(World)) { mln } { w => sum(peeps) { p => oneHot(p,I(w.smokes(p))) } }\nFactorGraphBuffer.get",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 16,
     "compiler" : "section",
     "input" : {
       "code" : "output",
@@ -129,7 +137,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 16,
+    "id" : 17,
     "compiler" : "markdown",
     "input" : {
       "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Output: Structure Marginals\n",
@@ -137,18 +145,10 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 17,
-    "compiler" : "section",
-    "input" : {
-      "code" : "output_plots",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
     "id" : 18,
-    "compiler" : "markdown",
+    "compiler" : "wolfe",
     "input" : {
-      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Output: Plots\n",
+      "code" : "val margs = persons.map(p => p->random.nextDouble).toMap\nGraph.fromPreds[Symbol](persons, (x,y) => friends(x->y), \n        labels = p => (\"%s: %1.2f\" format(p,margs(p))), values = p => margs(p))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -156,12 +156,60 @@
     "id" : 19,
     "compiler" : "section",
     "input" : {
-      "code" : "future",
+      "code" : "output_plots1",
       "outputFormat" : "html",
       "extraFields" : { }
     }
   }, {
     "id" : 20,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Output: Plots\n",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 21,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "ml.wolfe.D3Implicits.barChart(mu)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 22,
+    "compiler" : "section",
+    "input" : {
+      "code" : "output_plots2",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 23,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Output: Plots",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 24,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "D3Plotter.lineplot(xyChart(((0.0 to 6.28 by 0.1), (Yf(math.sin(_), \"sin\"), Yf(math.cos(_), \"cos\")))))",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 25,
+    "compiler" : "section",
+    "input" : {
+      "code" : "future",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 26,
     "compiler" : "markdown",
     "input" : {
       "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Future Work\n\n- Plate Models\n- Model/Objective Equations\n",
