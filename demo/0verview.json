@@ -60,7 +60,7 @@
     "id" : 7,
     "compiler" : "markdown",
     "input" : {
-      "code" : "##Eval\nCompile argmax or expectation operators",
+      "code" : "##Evaluate\nCompile argmax or expectation operators",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -84,7 +84,23 @@
     "id" : 10,
     "compiler" : "markdown",
     "input" : {
-      "code" : "## Println (Visualization)\n- Structured Data\n- Graphical Model\n- State of Inference\n- Output of Inference",
+      "code" : "## Visualizations for a PPL-IDE\n- Structured Data\n- Graphical Model\n- State of Inference\n- Output of Inference",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 11,
+    "compiler" : "section",
+    "input" : {
+      "code" : "structured_nlp",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 12,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "## Structured Data: NLP\n",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -100,7 +116,7 @@
     "id" : 14,
     "compiler" : "markdown",
     "input" : {
-      "code" : "## Structured Data: Graphs\n",
+      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Structured Data: Graphs\n",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -172,7 +188,7 @@
     "id" : 23,
     "compiler" : "markdown",
     "input" : {
-      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Output: Structure Marginals\n",
+      "code" : "## Output: Structure Marginals\n",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -196,7 +212,7 @@
     "id" : 26,
     "compiler" : "markdown",
     "input" : {
-      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Output: Plots\n",
+      "code" : "## Output: Plots\n",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -244,7 +260,7 @@
     "id" : 32,
     "compiler" : "markdown",
     "input" : {
-      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Future Work\n\n- Plate Models\n- Model/Objective Equations\n",
+      "code" : "## Future Work\n\n- Plate Models\n- Model/Objective Equations\n",
       "outputFormat" : "html",
       "extraFields" : { }
     }
