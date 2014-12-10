@@ -4,7 +4,7 @@
     "id" : 0,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "val labels = Seq(\"O\",\"B-PER\",\"B-LOC\",\"I-PER\",\"I-LOC\")\nval firstNames = Set(\"John\")\nval cities = Set(\"Denver\")\nval weights = Vector(\n  (\"Denver\",\"B-LOC\") -> 1.0,\n  (\"Denver\",\"B-PER\") -> 0.1,\n  (\"John\",\"B-PER\") -> 3.0,\n  (\"B-PER\",\"I-PER\") -> 2.0,\n  ('lowercase,\"O\") -> 2.0,\n  (\",\",\"O\") -> 1.0,\n  \"O\" -> 1.0\n)\nval doc = TokenSplitter(SentenceSplitter(\n  \"John Denver is a Songwriter. Throughout his life, Denver produced many records.\"))\nval words = doc.tokenWords\ntype Words = Seq[String]\ntype Ners = Seq[String]\ndef space(words:Words) = seqsOfLength(words.length,labels)\ndef feats(words:Words)(ner:Ners) = \n  sum(0 until words.size) { i => oneHot(ner(i))} + \n  sum(0 until words.size) { i => oneHot('lowercase -> ner(i), I(words(i).head.isLower))} +\n  sum(0 until words.size) { i => oneHot(words(i) -> ner(i))} +\n  sum(0 until words.size - 1) {i => oneHot(ner(i) -> ner(i+1))}\ndef crf(w:Vector,words:Words)(ners:Ners) = \n  w dot feats(words)(ners)\n\ndef matches(words:Words) =\n  for (i <- words.indices; j <- words.indices; if words(i) != \".\" && i < j && words(i) == words(j)) yield (i,j)\n\ndef skip(words:Words)(ners:Ners) =\n  sum(matches(words)) {p => 2 * I(ners(p._1).drop(2) == ners(p._2).drop(2))}\n\ndef skipChain(w:Vector, words:Words)(ners:Ners) = \n  crf(w,words)(ners) + skip(words)(ners)\n\nval prediction = argmax(space(words)){skipChain(weights,words)}\nBratRenderer.bratIE(ml.wolfe.nlp.io.CoNLLReader.appendMentions(doc,prediction))",
+      "code" : "import ml.wolfe.examples.SkipChainUtil._\nval doc = TokenSplitter(SentenceSplitter(\n  \"John Denver is a Songwriter. Throughout his life, Denver produced many records.\"))\nBratRenderer.bratIE(doc)",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -12,7 +12,31 @@
     "id" : 1,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "factorGraphURL(FactorGraphBuffer)",
+      "code" : "type Words = Seq[String]\ntype Ners = Seq[String]\nval words = doc.tokenWords\ndef space(words:Words) = seqsOfLength(words.length,labels)\ndef feats(words: Words)(ner: Ners) =\n  sum(0 until words.size) { i => oneHot(ner(i)) } +\n  sum(0 until words.size) { i => oneHot(words(i) -> ner(i)) } +\n  sum(0 until words.size) { i => oneHot('lowercase -> ner(i), I(words(i).head.isLower)) } +\n  sum(0 until words.size) { i => oneHot('firstName -> ner(i), I(firstNames(words(i)))) } +\n  sum(0 until words.size) { i => oneHot('lastName -> ner(i), I(lastNames(words(i)))) } +\n  sum(0 until words.size) { i => oneHot('location -> ner(i), I(locations(words(i)))) } +\n  sum(0 until words.size) { i => oneHot('punct -> ner(i), I(puncts(words(i)))) } +\n  sum(0 until words.size - 1) { i => oneHot(ner(i) -> ner(i + 1)) }\n\ndef crf(w:Vector,words:Words)(ners:Ners) = \n  w dot feats(words)(ners)\n\nval first = argmax(space(words)){crf(weights,words)}\nfactorGraphURL(FactorGraphBuffer)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 2,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "BratRenderer.bratIE(ml.wolfe.nlp.io.CoNLLReader.appendMentions(doc,first))",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 3,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "def matches(words: Words) =\n  for (i <- words.indices; j <- words.indices; if words(i) != \".\" && i < j && words(i) == words(j)) yield (i, j)\n\ndef skip(words:Words)(ners:Ners) =\n  sum(matches(words)) {p => 2 * I(ners(p._1).drop(2) == ners(p._2).drop(2))}\n\ndef skipChain(w:Vector, words:Words)(ners:Ners) = \n  crf(w,words)(ners) + skip(words)(ners)\n\nval prediction = argmax(space(words)){skipChain(weights,words)}\nfactorGraphURL(FactorGraphBuffer)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 4,
+    "compiler" : "wolfe",
+    "input" : {
+      "code" : "BratRenderer.bratIE(ml.wolfe.nlp.io.CoNLLReader.appendMentions(doc,prediction))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
