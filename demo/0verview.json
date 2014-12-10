@@ -36,7 +36,7 @@
     "id" : 4,
     "compiler" : "markdown",
     "input" : {
-      "code" : "## Read\n**Wolfe**: Define objectives and density functions declaratively",
+      "code" : "## Read: Wolfe\nDefine objectives and density functions as in your paper",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -44,7 +44,7 @@
     "id" : 5,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "def space(words: Seq[String]) = \n  seqsOfLength(words.length, Seq(\"O\",\"LOC\",\"CONF\"))\n\ndef feats(words:Seq[String])(ner:Seq[String]) = \n  sum(0 until words.size) { i => oneHot(words(i) -> ner(i)) } +\n  sum(0 until words.size - 1) { i => oneHot(ner(i) -> ner(i + 1)) }\n\ndef crf(weights:Vector, words:Seq[String])(ner:Seq[String]) = \n  weights dot feats(words)(ner)\n\ndef condLL(words:Seq[String],gold:Seq[String])(weights:Vector) =\n  crf(weights,words)(gold) - logZ(space(words)){crf(weights,words)}\n\ncrf(oneHot(\"NIPS\"->\"CONF\",1.0),Seq(\"NIPS\"))(Seq(\"CONF\"))",
+      "code" : "//NER for: location or conference?\ndef space(words: Seq[String]) = \n  seqsOfLength(words.length, Seq(\"O\",\"LOC\",\"CONF\"))\n\ndef feats(words:Seq[String])(ner:Seq[String]) = \n  sum(0 until words.size) { i => oneHot(words(i) -> ner(i)) } +\n  sum(0 until words.size - 1) { i => oneHot(ner(i) -> ner(i + 1)) }\n\ndef crf(weights:Vector, words:Seq[String])(ner:Seq[String]) = \n  weights dot feats(words)(ner)\n\n//Check Sequence Tagging for more complex losses \ndef condLL(words:Seq[String],gold:Seq[String])(weights:Vector) =\n  crf(weights,words)(gold) - logZ(space(words)){crf(weights,words)}\n\ncrf(oneHot(\"NIPS\"->\"CONF\",1.0),Seq(\"NIPS\"))(Seq(\"CONF\"))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -68,7 +68,7 @@
     "id" : 8,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "val x = Seq(\"NIPS\",\"at\",\"Montreal\")  \nval y = Seq(\"CONF\", \"O\", \"LOC\")\nargmax(vectors) {condLL(x,y)}.head.asString",
+      "code" : "val x = Seq(\"NIPS\",\"at\",\"Montreal\")  \nval y = Seq(\"CONF\", \"O\", \"LOC\")\nval w = argmax(vectors) {condLL(x,y)}\nw(\"LOC\"->\"LOC\")",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -137,6 +137,14 @@
       "extraFields" : { }
     }
   }, {
+    "id" : 29,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "Check [sequence tagging demo](http://localhost:9000/template/demo/wolfe-docs/demo/crfs-infer)  for NLP structures",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
     "id" : 17,
     "compiler" : "section",
     "input" : {
@@ -156,7 +164,7 @@
     "id" : 19,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "implicit def peeps = List('Anna, 'Bob, 'Charlie)\ncase class World(smokes: Pred[Symbol])\ndef mln(w: World) = {\n  sum(peeps) { p => -1.0 * I(w.smokes(p)) } +\n  sum(peeps) { p1 => sum(peeps) { p2 => 1.0 * I(friends(p1, p2) --> (w.smokes(p1) == w.smokes(p2))) } }\n} \nval mu = expect(all(World)) { mln } { w => sum(peeps) { p => oneHot(p,I(w.smokes(p))) } }\nFactorGraphBuffer.get",
+      "code" : "implicit def peeps = List('Anna, 'Bob, 'Charlie)\ncase class World(smokes: Pred[Symbol])\ndef mln(w: World) = {\n  sum(peeps) { p => -1.0 * I(w.smokes(p)) } +\n  sum(peeps) { p1 => sum(peeps) { p2 => \n    1.0 * I(friends(p1, p2) --> (w.smokes(p1) == w.smokes(p2))) } }\n} \nval mu = expect(all(World)) { mln } { w => sum(peeps) { p => oneHot(p,I(w.smokes(p))) } }\nFactorGraphBuffer.get",
       "outputFormat" : "html",
       "extraFields" : { }
     }
