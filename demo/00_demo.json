@@ -1,0 +1,13 @@
+{
+  "name" : "NIPS Demo 2014",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "## [Gentle Introduction](/template/presentWolfe/wolfe-docs/demo/0verview)\n\n## 1. [Statistical Relational Learning](/template/demo/wolfe-docs/demo/mln)\n\n## 2. [Sequence Tagging](/template/demo/wolfe-docs/demo/crfs-infer)\n\n## 3. [Image Denoising](/template/demo/wolfe-docs/demo/denoise)\n\n## 4. [Parameter Estimation](/template/demo/wolfe-docs/demo/crfs)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  } ],
+  "config" : { }
+}
