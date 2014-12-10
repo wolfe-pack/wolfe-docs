@@ -4,7 +4,7 @@
     "id" : 0,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "val corpus = \"/Users/sriedel/corpora/conll03/eng.train\"\nval train = ml.wolfe.nlp.io.CoNLLReader.asDocs(corpus,\" \").take(100).toSeq\nval labels = train.flatMap(_.entityMentionsAsBIOSeq).distinct\nval doc = train(1)\nBratRenderer.bratIE(doc)",
+      "code" : "import ml.wolfe.examples.SkipChainUtil._\n\nval corpus = \"/Users/sriedel/corpora/conll03/eng.train\"\nval (test, train) = ml.wolfe.nlp.io.CoNLLReader.asDocs(corpus, \" \").take(1000).toIndexedSeq.splitAt(10)\nval labels = train.flatMap(_.entityMentionsAsBIOSeq).distinct\nval trainPairs = train.map(d => (d.tokenWords, d.entityMentionsAsBIOSeq))\nval testPairs  = test.map(d => (d.tokenWords, d.entityMentionsAsBIOSeq))\nval trainInputs = train.map(_.tokenWords)\nval testInputs  = test.map(_.tokenWords)\n\nval doc = train(0)\nBratRenderer.bratIE(doc)",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -12,7 +12,7 @@
     "id" : 1,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "doc.sentences.head.entityMentionsAsBIOSeq.mkString(\" \")",
+      "code" : "type Words = Seq[String]\ntype Ners = Seq[String]\n\ndef feats(words: Words)(ner: Ners) =\n  sum(0 until words.size) { i => oneHot(ner(i)) } +\n  sum(0 until words.size) { i => oneHot(words(i) -> ner(i)) } +\n  sum(0 until words.size) { i => oneHot('lowercase -> ner(i), I(words(i).head.isLower)) } +\n  sum(0 until words.size) { i => oneHot('firstName -> ner(i), I(firstNames(words(i)))) } +\n  sum(0 until words.size) { i => oneHot('lastName -> ner(i), I(lastNames(words(i)))) } +\n  sum(0 until words.size) { i => oneHot('location -> ner(i), I(locations(words(i)))) } +\n  sum(0 until words.size) { i => oneHot('punct -> ner(i), I(puncts(words(i)))) } +\n  sum(0 until words.size - 1) { i => oneHot(ner(i) -> ner(i + 1)) }\n\ndef crf(weights:Vector,words:Words)(ner:Ners) = \n  weights dot feats(words)(ner)  ",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -20,42 +20,12 @@
     "id" : 2,
     "compiler" : "wolfe",
     "input" : {
-      "code" : "type X = Seq[String]\ntype Y = Seq[String]\ndef feats(words:X)(ner:Y) = \n  sum(0 until words.size) { i => oneHot(ner(i))} + \n  sum(0 until words.size) { i => oneHot(words(i) -> ner(i))} +\n  sum(0 until words.size - 1) {i => oneHot(ner(i) -> ner(i+1))}\nfeats(doc.tokenWords)(doc.entityMentionsAsBIOSeq)",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
-    "id" : 3,
-    "compiler" : "wolfe",
-    "input" : {
-      "code" : "def space(words:X) = seqsOfLength(words.length,labels)\n@OutputFactorGraph\ndef crf(weights:Vector,words:X)(ner:Y) = \n  weights dot feats(words)(ner)\ndef instanceCondLikelihood(weights:Vector,words:X)(gold:Y) =\n  crf(weights,words)(gold) - logZ(space(words))(crf(weights,words))  \ndef condLikelihood(data:Seq[(X,Y)])(weights:Vector) =\n  sum(data)(d => instanceCondLikelihood(weights,d._1)(d._2))\n  \nval seqTrain = train.map(d => (d.tokenWords,d.entityMentionsAsBIOSeq))\nval weights = argmax(vectors){condLikelihood(seqTrain)}\nweights.take(10)",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
-    "id" : 4,
-    "compiler" : "wolfe",
-    "input" : {
-      "code" : "def predict(weights:Vector, words:X) = \n  argmax(space(words))(crf(weights,words))\n  \nval output = predict(weights, Seq(\"EU\",\"rejects\",\"John\",\"call\",\".\")) \noutput",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
-    "id" : 5,
-    "compiler" : "wolfe",
-    "input" : {
-      "code" : "FactorGraphBuffer.get",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
-    "id" : 6,
-    "compiler" : "markdown",
-    "input" : {
-      "code" : "Blah",
+      "code" : "def space(words: Words) = \n  seqsOfLength(words.length, labels)\n\ndef testModel() = {\n\n  def lossAugmented(weights: Vector, words: Words, gold: Ners)(guess: Ners) =\n    crf(weights, words)(guess) + sum(0 until words.size) { i => -1.0 * I(gold(i) == guess(i)) }\n\n  def instanceNegLoss(weights: Vector, words: Words)(gold: Ners) =\n    crf(weights, words)(gold) - max(space(words))(crf(weights, words))\n\n  def negLoss(data: Seq[(Words, Ners)])(weights: Vector) =\n    sum(data)(d => instanceNegLoss(weights, d._1)(d._2))\n\n  val weights = argmax(vectors) { negLoss(trainPairs) }\n\n  def predict(words: Words) = \n    argmax(space(words)) { crf(weights, words) }\n  \n  val testPredictions  = map(testInputs) { predict }\n  accuracy(testPairs.map(_._2), testPredictions) \n}\nval accuracies = Seq(0.0 -> testModel())\nD3Plotter.lineplot(xyChart(XY(accuracies)))",
       "outputFormat" : "html",
       "extraFields" : { }
     }
   } ],
-  "config" : { }
+  "config" : {
+    "autosave" : "false"
+  }
 }
