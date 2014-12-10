@@ -89,22 +89,6 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 11,
-    "compiler" : "section",
-    "input" : {
-      "code" : "structured_nlp",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
-    "id" : 12,
-    "compiler" : "markdown",
-    "input" : {
-      "code" : "## Structured Data: NLP\n",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
     "id" : 13,
     "compiler" : "section",
     "input" : {
@@ -116,7 +100,7 @@
     "id" : 14,
     "compiler" : "markdown",
     "input" : {
-      "code" : "A Visual and Interactive IDE for Probabilistic Programming\n\n## Structured Data: Graphs\n",
+      "code" : "## Structured Data: Graphs\n",
       "outputFormat" : "html",
       "extraFields" : { }
     }
@@ -245,22 +229,6 @@
     "compiler" : "wolfe",
     "input" : {
       "code" : "D3Plotter.lineplot(xyChart(((0.0 to 6.28 by 0.1), (Yf(math.sin(_), \"sin\"), Yf(math.cos(_), \"cos\")))))",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
-    "id" : 31,
-    "compiler" : "section",
-    "input" : {
-      "code" : "future",
-      "outputFormat" : "html",
-      "extraFields" : { }
-    }
-  }, {
-    "id" : 32,
-    "compiler" : "markdown",
-    "input" : {
-      "code" : "## Future Work\n\n- Plate Models\n- Model/Objective Equations\n",
       "outputFormat" : "html",
       "extraFields" : { }
     }
