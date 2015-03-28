@@ -1,0 +1,93 @@
+{
+  "name" : "Wolfe",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "#### Declarative Machine Learning ",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 1,
+    "compiler" : "section",
+    "input" : {
+      "code" : "Contributors",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 2,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "## Contributors\n* [Jan Noessner](http://www.jan-noessner.de/)\n* [Jason Naradowsky](http://people.cs.umass.edu/~narad/)\n* [Larysa Visengeriyeva](https://twitter.com/visenger)\n* [Luke Hewitt](http://lukehewitt.co.uk)\n* [Sameer Singh](http://people.cs.umass.edu/~sameer/)\n* [Sebastian Riedel](http://www.riedelcastro.org)\n* [Tim Rocktäschel](http://rockt.github.io/)\n* [Vivek Srikumar](http://svivek.com/)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 3,
+    "compiler" : "section",
+    "input" : {
+      "code" : "Goals",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 4,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "## Goal \nRapidly develop **custom-made** machine learning models without a postgraduate degree in machine learning  ",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 5,
+    "compiler" : "section",
+    "input" : {
+      "code" : "NotOnly",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 6,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "## Not only ...\n* a classifier to predict whether a person smokes\n* a classifier to predict if a word refers to a person or a location ",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 7,
+    "compiler" : "section",
+    "input" : {
+      "code" : "ButAlso",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 8,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "## But also ...\n* a model that predicts smoking behaviour jointly, taking into account that friends share smoking behavior\n* a model that captures that \"Denver\" in a document about \"John Denver\" more likely refers to a person.",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 9,
+    "compiler" : "section",
+    "input" : {
+      "code" : "DemoURL",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 10,
+    "compiler" : "markdown",
+    "input" : {
+      "code" : "[tiny.cc/wolfe](tiny.cc/wolfe)",
+      "outputFormat" : "html",
+      "extraFields" : { }
+    }
+  } ],
+  "config" : { }
+}

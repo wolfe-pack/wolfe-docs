@@ -137,7 +137,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 29,
+    "id" : 17,
     "compiler" : "markdown",
     "input" : {
       "code" : "Check [sequence tagging demo](http://localhost:9000/template/demo/wolfe-docs/demo/crfs-infer)  for NLP structures",
@@ -145,7 +145,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 17,
+    "id" : 18,
     "compiler" : "section",
     "input" : {
       "code" : "graphical_model",
@@ -153,7 +153,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 18,
+    "id" : 19,
     "compiler" : "markdown",
     "input" : {
       "code" : "## Model and Inference\n",
@@ -161,7 +161,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 19,
+    "id" : 20,
     "compiler" : "wolfe",
     "input" : {
       "code" : "implicit def peeps = List('Anna, 'Bob, 'Charlie)\ncase class World(smokes: Pred[Symbol])\ndef mln(w: World) = {\n  sum(peeps) { p => -1.0 * I(w.smokes(p)) } +\n  sum(peeps) { p1 => sum(peeps) { p2 => \n    1.0 * I(friends(p1, p2) --> (w.smokes(p1) == w.smokes(p2))) } }\n} \nval mu = expect(all(World)) { mln } { w => sum(peeps) { p => oneHot(p,I(w.smokes(p))) } }\nFactorGraphBuffer.get",
@@ -169,7 +169,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 20,
+    "id" : 21,
     "compiler" : "section",
     "input" : {
       "code" : "output",
@@ -177,7 +177,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 21,
+    "id" : 22,
     "compiler" : "markdown",
     "input" : {
       "code" : "## Output: Structure Marginals\n",
@@ -185,7 +185,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 22,
+    "id" : 23,
     "compiler" : "wolfe",
     "input" : {
       "code" : "val margs = persons.map(p => p->random.nextDouble).toMap\nGraph.fromPreds[Symbol](persons, (x,y) => friends(x->y), \n        labels = p => (\"%s: %1.2f\" format(p,margs(p))), values = p => margs(p))",
@@ -193,7 +193,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 23,
+    "id" : 24,
     "compiler" : "section",
     "input" : {
       "code" : "output_plots1",
@@ -201,7 +201,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 24,
+    "id" : 25,
     "compiler" : "markdown",
     "input" : {
       "code" : "## Output: Plots\n",
@@ -209,7 +209,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 25,
+    "id" : 26,
     "compiler" : "wolfe",
     "input" : {
       "code" : "ml.wolfe.D3Implicits.barChart(mu)",
@@ -217,7 +217,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 26,
+    "id" : 27,
     "compiler" : "section",
     "input" : {
       "code" : "output_plots2",
@@ -225,7 +225,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 27,
+    "id" : 28,
     "compiler" : "markdown",
     "input" : {
       "code" : "## Output: Plots",
@@ -233,7 +233,7 @@
       "extraFields" : { }
     }
   }, {
-    "id" : 28,
+    "id" : 29,
     "compiler" : "wolfe",
     "input" : {
       "code" : "D3Plotter.lineplot(xyChart(((0.0 to 6.28 by 0.1), (Yf(math.sin(_), \"sin\"), Yf(math.cos(_), \"cos\")))))",
