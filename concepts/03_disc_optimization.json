@@ -10,7 +10,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 2,
+    "id" : 1,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
@@ -19,7 +19,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 3,
+    "id" : 2,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -28,13 +28,42 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 1,
+    "id" : 3,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
       "code" : "val W = Vectors(2)\nval weights = W.Const(vector(1,2))\nval observed = W.Const(vector(1,-1))\nargmax(Bools)(y =>  I(y) * (weights dot observed))()",
       "extraFields" : {
         "aggregatedCells" : "[]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 4,
+    "compiler" : "heading3",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Message Passing",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 5,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "The above binary search space is obviously small enough to search brute-force. However, in general search spaces have combinatorial size, for example, when we are searching for sequences of given length. In such cases exhaustive search becomes infeasible. For such cases Wolfe offers combinatorial optimization algorithms based on message passing. To employ these methods, Wolfe analyses the term structure to create factor graphs, and then runs message passing on these graphs. \n\nTo use message passing when finding argmax values you can use the `argmax(dom)(obj) by method` expression. Currently Wolfe only supports the [Max-Product](todo) algorithm, a generalization of the [Viterbi](todo) algorithm. Below you find an example where a [linear chain CRF](todo) is optimized using Max-Product.            ",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 6,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val l = Ints(0 until 10).Var\nval Y = Seqs(Bools, 0, 5)\ndef model(length:IntTerm)(y: Y.Term) = { \n  sum(0 until length) { i => I(y(i))} +\n  sum(0 until length - 1) { i => I(y(i) <-> !y(i + 1))}\n} subjectTo (y.length === length) \nval result = argmax(Y)(model(l)) by maxProduct(MaxProductParameters(10))\nresult(l << 5) ",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val W = Vectors(2)\\nval weights = W.Const(vector(1,2))\\nval observed = W.Const(vector(1,-1))\\nargmax(Bools)(y =>  I(y) * (weights dot observed))()\"]"
       },
       "outputFormat" : null
     }
