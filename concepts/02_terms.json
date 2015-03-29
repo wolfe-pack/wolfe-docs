@@ -134,7 +134,7 @@
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
-      "code" : "Boolean Functions",
+      "code" : "Boolean Operators",
       "extraFields" : { },
       "outputFormat" : null
     }
@@ -183,7 +183,7 @@
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
-      "code" : "Numeric Functions",
+      "code" : "Numeric Operators",
       "extraFields" : { },
       "outputFormat" : null
     }
@@ -224,6 +224,35 @@
       "code" : "val i = Ints.Var\n(i * 2 - 1)(i << 5)",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 37,
+    "compiler" : "heading3",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Vector Operators",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 38,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Parameter vectors, layers of neural networks and word-embeddings are examples of vector representations. To facilitate working with such representations, Wolfe provides many standard operators on vectors, e.g. dot products, matrix-vector multiplications or simply component-wise \napplications of real-valued functions.",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 39,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val x = Vectors(2).Var\n(x dot x)(x << vector(1,2))",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\"]"
       },
       "outputFormat" : null
     }
