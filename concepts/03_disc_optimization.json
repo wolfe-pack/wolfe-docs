@@ -1,0 +1,25 @@
+{
+  "name" : "Discrete Optimization",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Discrete Optimization is a corner stone of [structured prediction](http://en.wikipedia.org/wiki/Structured_prediction). Both at _test time_ when you need to find the structure (say, sequence, parse tree, or general graph) with maximum score or probability, and at _training time_ when you try to ensure that the maximizing structure is equal to the _gold_ structure in the training set.\n\nLet us first consider the simplest case of structured prediction: binary classification. Given a linear `model`, learned `weights` and an `observed` feature vector, we like to find the boolean label `y` that maximizes the score. This can be done using the `argmax(domain)(obj)` expression. Here `domain` is a domain object, and `obj` a function from `domain.Term` to `Doubles`. Notice that `argmax` itself is a term, and hence needs a `()` to be evaluated.   ",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 1,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val W = Vectors(2)\nval weights = W.Const(vector(1,2))\nval observed = W.Const(vector(1,-1))\nargmax(Bools)(y =>  I(y) * (weights dot observed))()",
+      "extraFields" : {
+        "aggregatedCells" : "[]"
+      },
+      "outputFormat" : null
+    }
+  } ],
+  "config" : { }
+}
