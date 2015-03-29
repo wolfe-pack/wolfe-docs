@@ -5,7 +5,7 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Our goal is to compose mathematical objectives of the form \n\\\\(f:\\mathcal{S}\\mapsto\\mathbb{R}\\\\). Being able to define the domains \\\\(\\mathcal{S}\\\\) we can now go on to construct \\\\(f\\\\). In Wolfe this is done by constructing the _term_ \\\\(f(s)\\\\) that represents the function applied to an element \\\\(s \\in \\mathcal{S}\\\\). \n\nTerms in wolfe are represented through the `Term` trait. Each `Term` object has a domain, and _evaluates_ to a value in this domain based on an assignment to the free variables in the term. The way a term evaluates to a value defines the term's semantics. You can test what a term `t` evaluates to by calling `t(freeVar1 << value1, freeVar2 << value2, ...)`. \n\nTerms are constructed using the Wolfe Term DSL. Here basic term primitives, such as variables and  constants can be composed into complex mathematical objectives using constructs such as sequence or map accessors, plus and sum operators and even argmax expressions. The Wolfe Term DSL attempts to be as close as possible to Scala syntax, and hence often Wolfe Terms will look like standard scala expressions. However, it is important to point out that they are symbolic descriptions that define some computation, and they can be analyzed at runtime to derive gradients, maximization algorithms etc.  \n\nIn the following we will present a range of primitive and more complex terms.\n",
+      "code" : "Our goal is to compose mathematical objectives of the form \n\\\\(f:\\mathcal{S}\\mapsto\\mathbb{R}\\\\). Being able to define the domains \\\\(\\mathcal{S}\\\\) we can now go on to construct \\\\(f\\\\). In Wolfe this is done by constructing the _term_ \\\\(f(s)\\\\) that represents the function applied to an element \\\\(s \\in \\mathcal{S}\\\\). \n\nTerms in wolfe are represented through the `Term` trait. Each `Term` object has a domain, and _evaluates_ to a value in this domain based on an assignment to the free variables in the term. The way a term evaluates to a value defines the term's semantics. You can test what a term `t` evaluates to by calling `t(freeVar1 << value1, freeVar2 << value2, ...)`. If a term `t` has no free variables, simply call `t()`. \n\nTerms are constructed using the Wolfe Term DSL. Here basic term primitives, such as variables and  constants can be composed into complex mathematical objectives using constructs such as sequence or map accessors, plus and sum operators and even argmax expressions. The Wolfe Term DSL attempts to be as close as possible to Scala syntax, and hence often Wolfe Terms will look like standard scala expressions. However, it is important to point out that they are symbolic descriptions that define some computation, and they can be analyzed at runtime to derive gradients, maximization algorithms etc.  \n\nIn the following we will present a range of primitive and more complex terms.\n",
       "extraFields" : {
         "aggregatedCells" : "[]"
       },
@@ -228,7 +228,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 37,
+    "id" : 23,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
@@ -237,7 +237,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 38,
+    "id" : 24,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -246,7 +246,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 39,
+    "id" : 25,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -257,7 +257,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 23,
+    "id" : 26,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
@@ -266,7 +266,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 24,
+    "id" : 27,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -275,7 +275,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 25,
+    "id" : 28,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -286,7 +286,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 26,
+    "id" : 29,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -295,7 +295,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 27,
+    "id" : 30,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -306,7 +306,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 28,
+    "id" : 31,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
@@ -315,7 +315,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 29,
+    "id" : 32,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -324,7 +324,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 30,
+    "id" : 33,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -335,7 +335,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 31,
+    "id" : 34,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
@@ -344,7 +344,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 32,
+    "id" : 35,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -353,7 +353,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 33,
+    "id" : 36,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -364,7 +364,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 34,
+    "id" : 37,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
@@ -373,7 +373,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 35,
+    "id" : 38,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -382,13 +382,42 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 36,
+    "id" : 39,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
       "code" : "val x = Doubles.Var\nval y = Ints.Var\n(x subjectTo (y === 3))(x << 2.0, y << 2)",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x << vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\",\"s.length(s << IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m << Map(true -> 1.0, false -> 2.0),k << false)\",\"val s = Seqs(Bools,3).Var\\nval count = sum(0 until 3) { i => I(s(i))}\\ncount(s << IndexedSeq(true,true,true))\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 40,
+    "compiler" : "heading3",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Term Types",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 41,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Scala programs in general, and Wolfe terms in particular, are type-safe. That is, before you can execute code, the compiler will complain when you try to add two objects which aren't numbers, or when you try to access the i-th element of a term that isn't a sequence. This avoids many problems that only emerge at runtime in dynamic languages. However in Wolfe it also means that you need to explicitly type the arguments of methods that operate on terms to create new terms, and this can quickly get out of hand if you work with generic types (where types themselves have other types as parameters).  \n\nFor example, imagine you want to write a method that creates a term representing the number of verbs in a sentence, as shown below. With generic types the `count` method would require the input type `VarSeqDom[Tuple2Dom[DiscreteDom[String],DiscreteDom[String]]]#Term`. To avoid such long signatures, in Wolfe each domain has a type member `Term` that refers to the type of terms the domain provides. This allows the `count` signature to be much more concise by using `Sentences.Term` as input type.             ",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 42,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val Words = List(\"the\",\"cat\",\"sat\").toDom\nval Tags = List(\"DT\",\"NN\",\"VBD\").toDom\nval Tokens = Pairs(Words,Tags)\nval Sentences = Seqs(Tokens,0,3)\nval s = Sentences.Var\n\ndef count(s:Sentences.Term) = \n    sum(s){ t => I(t._1 === Tags.Const(\"VBD\")) }\n\ncount(s)(s << IndexedSeq(\"the\"->\"DT\",\"cat\" -> \"NN\", \"sat\" -> \"VBD\"))    ",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x << vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\",\"s.length(s << IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m << Map(true -> 1.0, false -> 2.0),k << false)\",\"val s = Seqs(Bools,3).Var\\nval count = sum(0 until 3) { i => I(s(i))}\\ncount(s << IndexedSeq(true,true,true))\",\"val x = Doubles.Var\\nval y = Ints.Var\\n(x subjectTo (y === 3))(x << 2.0, y << 2)\"]"
       },
       "outputFormat" : null
     }
