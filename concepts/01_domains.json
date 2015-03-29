@@ -101,7 +101,7 @@
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
-      "code" : "@ml.wolfe.term.domain case class Person(age:Int, name:String)\nPerson.Values(Ints(0 until 100),List(\"Anna\",\"Bob\").toDom).toIterable",
+      "code" : "@ml.wolfe.term.domain case class Person(age:Int, nam:String)\nPerson.Values(Ints(30 until 32),List(\"Anna\",\"Bob\").toDom).toIterable",
       "extraFields" : {
         "aggregatedCells" : "[\"List(\\\"Verb\\\",\\\"Noun\\\").toDom\",\"List(\\\"Verb\\\",\\\"Noun\\\").toDom.toIterable\",\"Ints(0 until 100).toIterable.take(4)\"]"
       },
