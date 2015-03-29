@@ -61,7 +61,7 @@
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
-      "code" : "val l = Ints(0 until 10).Var\nval Y = Seqs(Bools, 0, 5)\ndef model(length:IntTerm)(y: Y.Term) = { \n  sum(0 until length) { i => I(y(i))} +\n  sum(0 until length - 1) { i => I(y(i) <-> !y(i + 1))}\n} subjectTo (y.length === length) \nval result = argmax(Y)(model(l)) by maxProduct(MaxProductParameters(10))\nresult(l << 5) ",
+      "code" : "val l = Ints(0 until 10).Var\nval Y = Seqs(Bools, 0, 5)\ndef model(y: Y.Term) = { \n  sum(0 until l) { i => I(y(i))} +\n  sum(0 until l - 1) { i => I(y(i) <-> !y(i + 1))}\n} subjectTo (y.length === l) \nval result = argmax(Y)(model) by maxProduct(MaxProductParameters(10))\nresult(l := 5) ",
       "extraFields" : {
         "aggregatedCells" : "[\"val W = Vectors(2)\\nval weights = W.Const(vector(1,2))\\nval observed = W.Const(vector(1,-1))\\nargmax(Bools)(y =>  I(y) * (weights dot observed))()\"]"
       },
