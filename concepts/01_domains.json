@@ -5,7 +5,7 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Machine learning models are often represented as scalar functions \n$$f:\\mathcal{S}\\mapsto\\mathbb{R}$$ \nfrom a _domain_ (or a _sample space_ or _search space_) \\\\(\\mathcal{S}\\\\) to reals \\\\(\\mathbb{R}\\\\) that \nmeasure the score or probability of an element in the search space, or an empirical loss of an element in the space of model parameters. For example, we could talk about (word,part-of-speech-tag) pair, or something more structured \nsuch as a sequence of observations and labels, or a set of parameter vectors in a matrix factorization model. \n\nIn Wolfe you develop such scalar functions, and the\nfirst step is to define the domains \\\\(\\mathcal{S}\\\\) of such functions. To this end Wolfe provides a [Domain](todo) class. Note that in the case of discrete domains this class can be seen as a glorified scala collection, and there exist mappings from collections to domains, and vice versa.\n",
+      "code" : "Machine learning models are often represented as scalar functions \n$$f:\\mathcal{S}\\mapsto\\mathbb{R}$$ \nfrom a _domain_ (or a _sample space_ or _search space_) \\\\(\\mathcal{S}\\\\) to reals \\\\(\\mathbb{R}\\\\) that \nmeasure the score or probability of an element in the search space, or an empirical loss of an element in the space of model parameters. For example, we could talk about (word,part-of-speech-tag) pair, or something more structured \nsuch as a sequence of observations and labels, or a set of parameter vectors in a matrix factorization model. \n\nIn Wolfe you develop such scalar functions, and the\nfirst step is to define the domains \\\\(\\mathcal{S}\\\\) of such functions. To this end Wolfe provides a [Domain](todo) class. \n",
       "extraFields" : { },
       "outputFormat" : null
     }
@@ -14,7 +14,7 @@
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
-      "code" : "Atomic Domains",
+      "code" : "Naming Conventions",
       "extraFields" : { },
       "outputFormat" : null
     }
@@ -23,19 +23,17 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Say we want to classify words as nouns or verbs. At the core of this task is an _atomic_ domain\nof labels, in this case \"Noun\" and \"Verb.\" In Wolfe you can use simple scala iterables to define\nsuch atomic collections, such as a [List](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.List). Provided that you have imported `ml.wolfe.term.TermImplicits._`, the `toDom` method on any iterable creates a discrete domain with elements of the given iterable.  ",
+      "code" : "Domains are core building blocks in Wolfe, and it is useful to spot them quickly when looking at code, and to differentiate them from normal collections. To this end Wolfe defines a set of [naming conventions](https://github.com/wolfe-pack/wolfe/wiki/Wolfe-Naming-Conventions). These conventions require domain variables (as well as constructors) to alway be _uppercase_ and _plural_, or _uppercase_ only if the domain is a single letter.",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
     "id" : 3,
-    "compiler" : "wolfe",
+    "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
-      "code" : "List(\"Verb\",\"Noun\").toDom",
-      "extraFields" : {
-        "aggregatedCells" : "[]"
-      },
+      "code" : "Discrete Domains",
+      "extraFields" : { },
       "outputFormat" : null
     }
   }, {
@@ -43,7 +41,7 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "As mentioned above, (discrete) domains can be mapped to iterables. This can be achieved by calling `toIterable` on the domain object. Notice that in practice mapping back to iterables is mostly used for inspecting and debugging domains. ",
+      "code" : "Say we want to classify words as nouns or verbs. At the core of this task is an _discrete_ domain\nof labels, in this case \"Noun\" and \"Verb.\" In Wolfe you can use simple scala iterables to define\nsuch discrete domains, such as a [List](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.List). Provided that you have imported `ml.wolfe.term.TermImplicits._`, the `toDom` method on any iterable creates a discrete domain with elements of the given iterable.  ",
       "extraFields" : { },
       "outputFormat" : null
     }
@@ -52,9 +50,9 @@
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
-      "code" : "List(\"Verb\",\"Noun\").toDom.toIterable",
+      "code" : "val Tags = List(\"Verb\",\"Noun\").toDom\nTags",
       "extraFields" : {
-        "aggregatedCells" : "[\"List(\\\"Verb\\\",\\\"Noun\\\").toDom\"]"
+        "aggregatedCells" : "[]"
       },
       "outputFormat" : null
     }
@@ -63,7 +61,7 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Of course scala [Range](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.Range)\nobjects can serve as collections of possible worlds as well.",
+      "code" : "As mentioned above, (discrete) domains can be mapped to iterables. This can be achieved by calling `toIterable` on the domain object. Notice that in practice mapping back to iterables is mostly used for inspecting and debugging domains. ",
       "extraFields" : { },
       "outputFormat" : null
     }
@@ -72,9 +70,29 @@
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
-      "code" : "Ints(0 until 100).toIterable.take(4)",
+      "code" : "Tags.toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[\"List(\\\"Verb\\\",\\\"Noun\\\").toDom\",\"List(\\\"Verb\\\",\\\"Noun\\\").toDom.toIterable\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 36,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Domains provide a range of methods, many of them mostly used internally when we compose the actual functions \\\\(f\\\\), and hence not discussed here. However, two methods that can be useful for understanding and inspecting domains are their `zero` and `one` methods which return a canonical *empty* and *full* value in the domain. For example, in continuous domains the `zero` element is 0.0, and `one` is 1.0. In discrete domains `zero` is the first element in the domain, and `one` the last. ",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 37,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "(Tags.zero,Tags.one)",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\"]"
       },
       "outputFormat" : null
     }
@@ -83,7 +101,7 @@
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
-      "code" : "Multivariate Domains",
+      "code" : "Integer Domains",
       "extraFields" : { },
       "outputFormat" : null
     }
@@ -92,7 +110,7 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "In practice elements in search spaces have several interacting components. For example, \nin the case of part-of-speech classification a token has a word and a part-of-speech,\nand the former helps to determine the latter. In Wolfe such worlds can be \ndescribed using Scala [case classes](http://www.codecommit.com/blog/scala/case-classes-are-cool). \n\nTo compactly describe a (factorized) domain of case class objects, Wolfe provides the `@domain` macro. When used as annotation for a case class, this macro generates a `Values` constructor for the case class that can be used to compose a domain of objects of this case class based on domains for the arguments of the case class. ",
+      "code" : "Often we need ranges of integers as domain. Not as much when defining search spaces, but regularly when we define running indices as arguments of sums (forward link). You can pass any  [Range](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.Range)\nobject to the `Ints` constructor to create a integer range domain.  ",
       "extraFields" : { },
       "outputFormat" : null
     }
@@ -101,9 +119,9 @@
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
-      "code" : "@ml.wolfe.term.domain case class Person(age:Int, nam:String)\nPerson.Values(Ints(30 until 32),List(\"Anna\",\"Bob\").toDom).toIterable",
+      "code" : "Ints(2 until 6).toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[\"List(\\\"Verb\\\",\\\"Noun\\\").toDom\",\"List(\\\"Verb\\\",\\\"Noun\\\").toDom.toIterable\",\"Ints(0 until 100).toIterable.take(4)\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\"]"
       },
       "outputFormat" : null
     }
@@ -112,25 +130,56 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "When case classes have many fields, and evolve over time, maintaining the correct order of the \ncartesian product can become tedious. Assuming each field has \na different scala type, we can avoid this problem by declaring the arguments of the\ncartesian product using scala implicits. Below you see the above example adapted\nto use the [Symbol](http://www.scala-lang.org/api/2.10.3/index.html#scala.Symbol) \nclass as label in order to make field types unique. \n\n\n",
+      "code" : "Often it is convenient to use the domain of _all_ integers:",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
     "id" : 12,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Ints.toString.take(10)",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 29,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
-      "code" : "Sequences",
+      "code" : "Tuple Domains",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 13,
+    "id" : 30,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Many real world problems, such as tagging in NLP, or gene sequencing,\nconcern sequences of objects. In Wolfe `seqs(worlds,maxLength)` takes a collection\nof possible worlds `worlds` and generates all possible sequences over these worlds\nup to a maximum length `maxLength`.\n\n",
+      "code" : "In practice elements in domains have several interacting components. For example, \nin the case of part-of-speech classification a token has a word and a part-of-speech,\nand the former helps to determine the latter. In Wolfe a simple way to construct a corresponding domain are Tuple Domains. Currently Wolfe only supports pairs. ",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 31,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val Tokens = Pairs(List(\"the\",\"dog\").toDom,List(\"DT\",\"NN\").toDom)\nTokens.toIterable",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 13,
+    "compiler" : "heading3",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Case Class Domains",
       "extraFields" : { },
       "outputFormat" : null
     }
@@ -139,12 +188,72 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "The base collection of possible worlds can be any scala iterable. In particular, it can be\npossible worlds constructed using other operators.",
+      "code" : "Tuple domains are convenient ways to construct multivariate domains. However, when reading code that uses tuples, you will find a lot of tuple field accessor expressions such as `t._2` that make it difficult to remember what is what. In Wolfe this can be overcome by using Scala [case classes](http://www.codecommit.com/blog/scala/case-classes-are-cool) as elements in a domain. \n\nTo compactly describe a (factorized) domain of case class objects, Wolfe provides the `@domain` macro. When used as annotation for a case class, this macro generates a `Values` constructor for the case class that can be used to compose a domain of objects of this case class based on domains for the arguments of the case class. ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
     "id" : 15,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "@domain case class Person(age:Int, firstName:String)\nval Persons = Person.Values(Ints(30 until 32),List(\"Anna\",\"Bob\").toDom)\nPersons.toIterable",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 16,
+    "compiler" : "heading3",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Sequences",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 17,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Many real world problems, such as tagging in NLP, or gene sequencing,\nconcern sequences of objects. In Wolfe `Seqs(elements,minLength,maxLength)` takes an element \ndomain `elements` and generates all possible sequences over this domain, with minimum length `minLength` and up to a maximum length `maxLength`.\n\n",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 18,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Seqs(Bools,1,2).toIterable",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 19,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "The element domain can be any domain. In particular, it can be a\ncomposed domains itself.",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 28,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Seqs(Persons,2,2).toIterable.take(2)",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 20,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
@@ -153,16 +262,27 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 16,
+    "id" : 21,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Wolfe supports the Scala [Map](http://www.scala-lang.org/api/2.10.4/index.html#scala.collection.immutable.Map) class to \nrepresent mappings from a domain to a range. Such mappings can be very useful, for example \nto represent relations and graphs, as shown in the example below. To generate \nall possible maps from a domain `dom` to a range `range` use the `maps(dom,range)`\nfunction.\n\n",
+      "code" : "Wolfe supports the Scala [Map](http://www.scala-lang.org/api/2.10.4/index.html#scala.collection.immutable.Map) class to \nrepresent mappings from a domain to a range. Such mappings can be very useful, for example \nto represent relations and graphs, as shown in the example below. To generate \nall possible maps from a domain `dom` to a range `range` use the `Maps(dom,range)`\nfunction.\n\n",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 17,
+    "id" : 32,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Maps(Ints(0 until 2),Bools).one",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 22,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
@@ -171,7 +291,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 18,
+    "id" : 23,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -180,39 +300,70 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 19,
+    "id" : 24,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
-      "code" : "Infinite Collections",
+      "code" : "Continuous Domains",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 20,
+    "id" : 25,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Often we need infinite collections of possible worlds. For example,\na possible world may have real-valued attributes, and hence there are infinitely\nmany possibilities unless with discretize the attribute. Another example\nare string attributes such as the word of a token. Given that people constantly produce \nnew words, and typos, such string attributes can be considered infinite as well.\n\nIn Wolfe infinite collections can be constructed with the `infty[T]` \nmethod that returns an infinite collection of type `T`. Note that such\ncollections really only serve as placeholders, and one cannot iterate\nover the infinite collection. Because of this, Wolfe currently \n__requires infinite attributes to be observed__.\n\n",
+      "code" : "Often elements in search space have real-valued continuous attributes. To model such attributes Wolfe provides the built-in `Doubles` domain, representing all 32 bit `Double` values.  \n\n",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 21,
+    "id" : 33,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Doubles.one",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 34,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Notice that even though technically doable, for continuous domains the `toIterable` method is not implemented, as it never makes sense to iterate through all 32 bit Double values.",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 26,
     "compiler" : "heading3",
     "input" : {
       "sessionId" : null,
-      "code" : "Built-in Collections",
+      "code" : "Vector Domains",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 22,
+    "id" : 27,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Wolfe comes with a set of built in collections of possible worlds that can be used to \nconstruct more complex ones.",
+      "code" : "It is common to represent parameters using vectors, and hence Wolfe provides a vector domain as well. The vector domain constructor requires the specification of the dimension of the vectors of the domain to be created ",
       "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 35,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Vectors(4).zero",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\",\"Doubles.one\"]"
+      },
       "outputFormat" : null
     }
   } ],

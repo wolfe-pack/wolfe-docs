@@ -1,0 +1,45 @@
+{
+  "name" : "Terms",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Our goal is to compose mathematical objectives of the form \n\\\\(f:\\mathcal{S}\\mapsto\\mathbb{R}\\\\). Being able to define the domains \\\\(\\mathcal{S}\\\\) we can now go on to construct \\\\(f\\\\). In Wolfe this is done by constructing the _term_ \\\\(f(s)\\\\) that represents the function applied to an element \\\\(s \\in \\mathcal{S}\\\\). \n\nTerms in wolfe are represented through the `Term` trait. Each `Term` object has a domain, and _evaluates_ to a value in this domain based on an assignment to the free variables in the term. The way a term evaluates to a value defines the term's semantics. You can test what a term `t` evaluates to by calling `t(freeVar1 << value1, freeVar2 << value2, ...)`. \n\nTerms are constructed using the Wolfe Term DSL. Here basic term primitives, such as variables and  constants can be composed into complex mathematical objectives using constructs such as sequence or map accessors, plus and sum operators and even argmax expressions. The Wolfe Term DSL attempts to be as close as possible to Scala syntax, and hence often Wolfe Terms will look like standard scala expressions.\n\nIn the following we will present a range of primitive and more complex terms.\n",
+      "extraFields" : {
+        "aggregatedCells" : "[]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 1,
+    "compiler" : "heading3",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Variables",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 2,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "One of the the simplest types of terms are _variables_. The value of a variable is the value assigned to this variable in a given binding. To construct a variable, you can use the `Var` constructor defined on domains. ",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 3,
+    "compiler" : "wolfe",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val b = Bools.Var\nb(b << true)",
+      "extraFields" : {
+        "aggregatedCells" : "[]"
+      },
+      "outputFormat" : null
+    }
+  } ],
+  "config" : { }
+}
