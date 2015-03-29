@@ -281,7 +281,7 @@
       "sessionId" : null,
       "code" : " val s = Seqs(Bools,0,2).Var\n val i = Ints(0 until 2).Var\n s(i)(s << IndexedSeq(false,true),i << 1)",
       "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\"]"
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x << vector(1,2))\"]"
       },
       "outputFormat" : null
     }
@@ -301,7 +301,7 @@
       "sessionId" : null,
       "code" : "s.length(s << IndexedSeq(false))",
       "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\"]"
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x << vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\"]"
       },
       "outputFormat" : null
     }
@@ -330,7 +330,7 @@
       "sessionId" : null,
       "code" : "val m = Maps(Bools,Doubles).Var\nval k = Bools.Var\nm(k)(m << Map(true -> 1.0, false -> 2.0),k << false)",
       "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\",\"s.length(s << IndexedSeq(false))\"]"
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x << vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\",\"s.length(s << IndexedSeq(false))\"]"
       },
       "outputFormat" : null
     }
@@ -359,7 +359,7 @@
       "sessionId" : null,
       "code" : "val s = Seqs(Bools,3).Var\nval count = sum(0 until 3) { i => I(s(i))}\ncount(s << IndexedSeq(true,true,true))",
       "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\",\"s.length(s << IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m << Map(true -> 1.0, false -> 2.0),k << false)\"]"
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x << vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\",\"s.length(s << IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m << Map(true -> 1.0, false -> 2.0),k << false)\"]"
       },
       "outputFormat" : null
     }
@@ -388,7 +388,7 @@
       "sessionId" : null,
       "code" : "val x = Doubles.Var\nval y = Ints.Var\n(x subjectTo (y === 3))(x << 2.0, y << 2)",
       "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\",\"s.length(s << IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m << Map(true -> 1.0, false -> 2.0),k << false)\",\"val s = Seqs(Bools,3).Var\\nval count = sum(0 until 3) { i => I(s(i))}\\ncount(s << IndexedSeq(true,true,true))\"]"
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b << true)\",\"val s = Seqs(Bools,2).Var\\ns(s << IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x << false, y << true)\",\"I(or)(x << false, y << true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b << false, x << 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i << 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x << vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s << IndexedSeq(false,true),i << 1)\",\"s.length(s << IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m << Map(true -> 1.0, false -> 2.0),k << false)\",\"val s = Seqs(Bools,3).Var\\nval count = sum(0 until 3) { i => I(s(i))}\\ncount(s << IndexedSeq(true,true,true))\"]"
       },
       "outputFormat" : null
     }

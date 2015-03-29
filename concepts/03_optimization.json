@@ -1,0 +1,14 @@
+{
+  "name" : "Optimization",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Operating machine learning models means, in many cases, optimization. For example, we might want to minimize some training loss, or maximize an energy function over a discrete structured prediction space. In Wolfe maximization can be conducted using the `max` and `argmax` operators on real valued functions.       ",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  } ],
+  "config" : { }
+}
