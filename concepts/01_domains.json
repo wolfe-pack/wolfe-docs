@@ -11,7 +11,7 @@
     }
   }, {
     "id" : 1,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "val Tags = List(\"Verb\",\"Noun\").toDom\nTags",
@@ -31,7 +31,7 @@
     }
   }, {
     "id" : 3,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "Tags.toIterable",
@@ -51,7 +51,7 @@
     }
   }, {
     "id" : 5,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "(Tags.zero,Tags.one)",
@@ -71,12 +71,12 @@
     }
   }, {
     "id" : 7,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "Ints(2 until 6).toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\"]"
+        "aggregatedCells" : "[]"
       },
       "outputFormat" : null
     }
@@ -91,12 +91,12 @@
     }
   }, {
     "id" : 9,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "Ints.toString.take(10)",
       "extraFields" : {
-        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\"]"
+        "aggregatedCells" : "[\"Ints(2 until 6).toIterable\"]"
       },
       "outputFormat" : null
     }
@@ -111,12 +111,12 @@
     }
   }, {
     "id" : 11,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "val Tokens = Pairs(List(\"the\",\"dog\").toDom,List(\"DT\",\"NN\").toDom)\nTokens.toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\"]"
+        "aggregatedCells" : "[\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\"]"
       },
       "outputFormat" : null
     }
@@ -131,12 +131,12 @@
     }
   }, {
     "id" : 13,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "@domain case class Person(age:Int, firstName:String)\nval Persons = Person.Values(Ints(30 until 32),List(\"Anna\",\"Bob\").toDom)\nPersons.toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\"]"
+        "aggregatedCells" : "[\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\"]"
       },
       "outputFormat" : null
     }
@@ -151,12 +151,12 @@
     }
   }, {
     "id" : 15,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "Seqs(Bools,1,2).toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\"]"
+        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\"]"
       },
       "outputFormat" : null
     }
@@ -171,12 +171,12 @@
     }
   }, {
     "id" : 17,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "Seqs(Persons,2,2).toIterable.take(2)",
       "extraFields" : {
-        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\"]"
+        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\"]"
       },
       "outputFormat" : null
     }
@@ -191,12 +191,12 @@
     }
   }, {
     "id" : 19,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "Maps(Ints(0 until 2),Bools).one",
       "extraFields" : {
-        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\"]"
+        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\"]"
       },
       "outputFormat" : null
     }
@@ -211,12 +211,12 @@
     }
   }, {
     "id" : 21,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "Doubles.one",
       "extraFields" : {
-        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\"]"
+        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\"]"
       },
       "outputFormat" : null
     }
@@ -231,12 +231,12 @@
     }
   }, {
     "id" : 23,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "Vectors(4).zero",
       "extraFields" : {
-        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\",\"Doubles.one\"]"
+        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\",\"Doubles.one\"]"
       },
       "outputFormat" : null
     }
