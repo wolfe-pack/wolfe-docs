@@ -5,7 +5,7 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Our goal is to compose mathematical objectives of the form \n\\\\(f:\\mathcal{S}\\mapsto\\mathbb{R}\\\\). Being able to define the domains \\\\(\\mathcal{S}\\\\) we can now go on to construct \\\\(f\\\\). In Wolfe this is done by constructing the _term_ \\\\(f(s)\\\\) that represents the function applied to an element \\\\(s \\in \\mathcal{S}\\\\). \n\nTerms in wolfe are represented through the `Term` trait. Each `Term` object has a domain, and _evaluates_ to a value in this domain based on an assignment to the free variables in the term. The way a term evaluates to a value defines the term's semantics. You can test what a term `t` evaluates to by calling `t(freeVar1 := value1, freeVar2 := value2, ...)`. If a term `t` has no free variables, simply call `t()`. \n\nTerms are constructed using the Wolfe Term DSL. Here basic term primitives, such as variables and  constants can be composed into complex mathematical objectives using constructs such as sequence or map accessors, plus and sum operators and even argmax expressions. The Wolfe Term DSL attempts to be as close as possible to Scala syntax, and hence often Wolfe Terms will look like standard scala expressions. However, it is important to point out that they are symbolic descriptions that define some computation, and they can be analyzed at runtime to derive gradients, maximization algorithms etc.  \n\nIn the following we will present a range of primitive and more complex terms.\n",
+      "code" : "Our goal is to compose mathematical objectives of the form \n\\\\(f:\\mathcal{S}\\mapsto\\mathbb{R}\\\\). Being able to define the domains \\\\(\\mathcal{S}\\\\) we can now go on to construct \\\\(f\\\\). In Wolfe this is done by constructing the _term_ \\\\(f(s)\\\\) that represents the function applied to an element \\\\(s \\in \\mathcal{S}\\\\). \n\nTerms in wolfe are represented through the `Term` trait. Each `Term` object has a domain, and _evaluates_ to a value in this domain based on an assignment to the free variables in the term. The way a term evaluates to a value defines the term's semantics. You can test what a term `t` evaluates to by calling `t(freeVar1 := value1, freeVar2 := value2, ...)`. If a term `t` has no free variables, simply call `t()`. \n\nTerms are constructed using the Wolfe Term DSL. Here basic term primitives, such as variables and  constants can be composed into complex mathematical objectives using constructs such as sequence or map accessors, plus and sum operators and even argmax expressions. The Wolfe Term DSL attempts to be as close as possible to Scala syntax, and hence often Wolfe Terms will look like standard scala expressions. However, it is important to point out that they are symbolic descriptions that define some computation, and they can be analyzed at runtime to derive gradients, maximization algorithms etc.  \n\nIn the following we will present a range of primitive and more complex terms.\n\n### Variables\n\nOne of the the simplest types of terms are _variables_. The value of a variable is the value assigned to this variable in a given binding. To construct a variable, you can use the `Var` constructor defined on domains. ",
       "extraFields" : {
         "aggregatedCells" : "[]"
       },
@@ -13,35 +13,17 @@
     }
   }, {
     "id" : 1,
-    "compiler" : "heading3",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "Variables",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 2,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "One of the the simplest types of terms are _variables_. The value of a variable is the value assigned to this variable in a given binding. To construct a variable, you can use the `Var` constructor defined on domains. ",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 3,
-    "compiler" : "wolfe",
-    "input" : {
-      "sessionId" : null,
-      "code" : "val b = Bools.Var\nb(b := true)",
+      "code" : "val b = Bools.Var\nb.eval(b := true)",
       "extraFields" : {
         "aggregatedCells" : "[]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 4,
+    "id" : 2,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -50,47 +32,38 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 5,
-    "compiler" : "wolfe",
+    "id" : 3,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "val s = Seqs(Bools,2).Var\ns(s := IndexedSeq(false,true))",
+      "code" : "val s = Seqs(Bools,2).Var\ns.eval(s := IndexedSeq(false,true))",
       "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\"]"
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb.eval(b := true)\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 4,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "### Constants\n\nConstants are terms that always evaluate to the same value. To create a constant of a given domain you can call the domain's `Const` method.",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 5,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val b = Bools.Const(true)\nb.eval()",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb.eval(b := true)\",\"val s = Seqs(Bools,2).Var\\ns.eval(s := IndexedSeq(false,true))\"]"
       },
       "outputFormat" : null
     }
   }, {
     "id" : 6,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Constants",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 7,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Constants are terms that always evaluate to the same value. To create a constant of a given domain you can call the domain's `Const` method.",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 8,
-    "compiler" : "wolfe",
-    "input" : {
-      "sessionId" : null,
-      "code" : "val b = Bools.Const(true)\nb()",
-      "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\"]"
-      },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 9,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -99,18 +72,18 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 10,
-    "compiler" : "wolfe",
+    "id" : 7,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "implicit val Instances = Seqs(Bools,2)\nval t = Seq(false,true).toConst\nt()",
+      "code" : "implicit val Instances = Seqs(Bools,2)\nval t = Seq(false,true).toConst\nt.eval()",
       "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\"]"
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb.eval(b := true)\",\"val s = Seqs(Bools,2).Var\\ns.eval(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb.eval()\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 11,
+    "id" : 8,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -119,47 +92,38 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 12,
-    "compiler" : "wolfe",
+    "id" : 9,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "val d:DoubleTerm = 1.0\nd()",
+      "code" : "val d:DoubleTerm = 1.0\nd.eval()",
       "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\"]"
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb.eval(b := true)\",\"val s = Seqs(Bools,2).Var\\ns.eval(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb.eval()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt.eval()\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 13,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Boolean Operators",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 14,
+    "id" : 10,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Boolean variables and constants can be composed using boolean functions. Wolfe provides the standard Scala operations on Booleans, as well as implication `-->` and equivalence `<->` to build models of probabilistic logic. ",
+      "code" : "### Boolean Operators\n\nBoolean variables and constants can be composed using boolean functions. Wolfe provides the standard Scala operations on Booleans, as well as implication `-->` and equivalence `<->` to build models of probabilistic logic. ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 15,
-    "compiler" : "wolfe",
+    "id" : 11,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "val x = Bools.Var\nval y = Bools.Var\nval or = (x || y)\nor(x := false, y := true)",
+      "code" : "val x = Bools.Var\nval y = Bools.Var\nval or = (x || y)\nor.eval(x := false, y := true)",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 16,
+    "id" : 12,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -168,47 +132,38 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 17,
-    "compiler" : "wolfe",
+    "id" : 13,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "I(or)(x := false, y := true)",
+      "code" : "I(or).eval(x := false, y := true)",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 18,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Numeric Operators",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 19,
+    "id" : 14,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "The final goal of modelling in Wolfe is to build functions from search or sample spaces to real values. Naturally Wolfe hence provides a range of functions to compose complex real terms from simpler ones, such as addition, multiplication and the `log` operator.   ",
+      "code" : "### Numeric Operators\n\nThe final goal of modelling in Wolfe is to build functions from search or sample spaces to real values. Naturally Wolfe hence provides a range of functions to compose complex real terms from simpler ones, such as addition, multiplication and the `log` operator.   ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 20,
-    "compiler" : "wolfe",
+    "id" : 15,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "val b = Bools.Var\nval x = Doubles.Var\nlog(x + I(b) * 2.0)(b := false, x := 2.0)",
+      "code" : "val b = Bools.Var\nval x = Doubles.Var\nlog(x + I(b) * 2.0).eval(b := false, x := 2.0)",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 21,
+    "id" : 16,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -217,76 +172,58 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 22,
-    "compiler" : "wolfe",
+    "id" : 17,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "val i = Ints.Var\n(i * 2 - 1)(i := 5)",
+      "code" : "val i = Ints.Var\n(i * 2 - 1).eval(i := 5)",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 23,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Vector Operators",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 24,
+    "id" : 18,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Parameter vectors, layers of neural networks and word-embeddings are examples of vector representations. To facilitate working with such representations, Wolfe provides many standard operators on vectors, e.g. dot products, matrix-vector multiplications or simply component-wise \napplications of real-valued functions.",
+      "code" : "### Vector Operators\n\nParameter vectors, layers of neural networks and word-embeddings are examples of vector representations. To facilitate working with such representations, Wolfe provides many standard operators on vectors, e.g. dot products, matrix-vector multiplications or simply component-wise \napplications of real-valued functions.",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 25,
-    "compiler" : "wolfe",
+    "id" : 20,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "val x = Vectors(2).Var\n(x dot x)(x := vector(1,2))",
+      "code" : "val x = Vectors(2).Var\n(x dot x).eval(x := vector(1,2))",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 26,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Sequence Terms",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 27,
+    "id" : 21,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "We have earlier introduced sequence domains. Terms of sequences, such as sequence variables or constants, provide an element accessor operator `s(i)` that returns a term representing the `i`th element of the sequence represented by `s`.   ",
+      "code" : "### Sequence Terms\n\nWe have earlier introduced sequence domains. Terms of sequences, such as sequence variables or constants, provide an element accessor operator `s(i)` that returns a term representing the `i`th element of the sequence represented by `s`.   ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 28,
-    "compiler" : "wolfe",
+    "id" : 23,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : " val s = Seqs(Bools,0,2).Var\n val i = Ints(0 until 2).Var\n s(i)(s := IndexedSeq(false,true),i := 1)",
+      "code" : " val s = Seqs(Bools,0,2).Var\n val i = Ints(0 until 2).Var\n s(i).eval(s := IndexedSeq(false,true),i := 1)",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x := vector(1,2))\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 29,
+    "id" : 24,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -295,23 +232,54 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 30,
-    "compiler" : "wolfe",
+    "id" : 25,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "s.length(s := IndexedSeq(false))",
+      "code" : "s.length.eval(s := IndexedSeq(false))",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x := vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s := IndexedSeq(false,true),i := 1)\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 31,
-    "compiler" : "heading3",
+    "id" : 26,
+    "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Map Terms",
+      "code" : "### Map Terms\n\nMap terms support access to the map's element via a key. ",
       "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 28,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val m = Maps(Bools,Doubles).Var\nval k = Bools.Var\nm(k).eval(m := Map(true -> 1.0, false -> 2.0),k := false)",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x := vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s := IndexedSeq(false,true),i := 1)\",\"s.length(s := IndexedSeq(false))\"]"
+      },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 29,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "### Quantified Sums\n\nSequence and map domains allow users to compactly define structured search spaces. Most of the time objectives on such spaces have a very repetitive (additive) structure, and can hence be defined compactly as well. For example, a training objective of instances \\\\(i\\\\) can be defined through \\\\(\\sum_i l(i)\\\\) where \\\\(l(i)\\\\) is some local loss. In Wolfe such terms can be formulated using the `sum(range)(body)` operator that represents the sum \n$$\\sum_{i \\in \\mathit{range}} \\mathit{body}(i)$$\nwhere `body` is a function from the element domain of `range` to the domain `Doubles` of reals. \n\nA simple example of an applied `sum` operator can be used to count the number of `true` elements in a sequence of Booleans.  \n",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  }, {
+    "id" : 31,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val s = Seqs(Bools,3).Var\nval count = sum(0 until 3) { i => I(s(i))}\ncount.eval(s := IndexedSeq(true,true,true))",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x := vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s := IndexedSeq(false,true),i := 1)\",\"s.length(s := IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m := Map(true -> 1.0, false -> 2.0),k := false)\"]"
+      },
       "outputFormat" : null
     }
   }, {
@@ -319,28 +287,19 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Map terms support access to the map's element via a key. ",
+      "code" : "### Constraints\n\nOften real-value functions need to be defined over a *constrained* subset of the original domain. In Wolfe this can be achieved using the `term.subjectTo(predicate)` operator on real-valued terms. This operator returns \\\\(-\\infty\\\\) if the `predicate` term evaluates to `false` and the value of `term` otherwise.   ",
       "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 33,
-    "compiler" : "wolfe",
-    "input" : {
-      "sessionId" : null,
-      "code" : "val m = Maps(Bools,Doubles).Var\nval k = Bools.Var\nm(k)(m := Map(true -> 1.0, false -> 2.0),k := false)",
-      "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x := vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s := IndexedSeq(false,true),i := 1)\",\"s.length(s := IndexedSeq(false))\"]"
-      },
       "outputFormat" : null
     }
   }, {
     "id" : 34,
-    "compiler" : "heading3",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "Quantified Sums",
-      "extraFields" : { },
+      "code" : "val x = Doubles.Var\nval y = Ints.Var\n(x subjectTo (y === 3)).eval(x := 2.0, y := 2)",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x := vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s := IndexedSeq(false,true),i := 1)\",\"s.length(s := IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m := Map(true -> 1.0, false -> 2.0),k := false)\",\"val s = Seqs(Bools,3).Var\\nval count = sum(0 until 3) { i => I(s(i))}\\ncount(s := IndexedSeq(true,true,true))\"]"
+      },
       "outputFormat" : null
     }
   }, {
@@ -348,79 +307,23 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Sequence and map domains allow users to compactly define structured search spaces. Most of the time objectives on such spaces have a very repetitive (additive) structure, and can hence be defined compactly as well. For example, a training objective of instances \\\\(i\\\\) can be defined through \\\\(\\sum_i l(i)\\\\) where \\\\(l(i)\\\\) is some local loss. In Wolfe such terms can be formulated using the `sum(range)(body)` operator that represents the sum \n$$\\sum_{i \\in \\mathit{range}} \\mathit{body}(i)$$\nwhere `body` is a function from the element domain of `range` to the domain `Doubles` of reals. \n\nA simple example of an applied `sum` operator can be used to count the number of `true` elements in a sequence of Booleans.  \n",
+      "code" : "### Term Types\n\nScala programs in general, and Wolfe terms in particular, are type-safe. That is, before you can execute code, the compiler will complain when you try to add two objects which aren't numbers, or when you try to access the i-th element of a term that isn't a sequence. This avoids many problems that only emerge at runtime in dynamic languages. However in Wolfe it also means that you need to explicitly type the arguments of methods that operate on terms to create new terms, and this can quickly get out of hand if you work with generic types (where types themselves have other types as parameters).  \n\nFor example, imagine you want to write a method that creates a term representing the number of verbs in a sentence, as shown below. With generic types the `count` method would require the input type `VarSeqDom[Tuple2Dom[DiscreteDom[String],DiscreteDom[String]]]#Term`. To avoid such long signatures, in Wolfe each domain has a type member `Term` that refers to the type of terms the domain provides. This allows the `count` signature to be much more concise by using `Sentences.Term` as input type.             ",
       "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 36,
-    "compiler" : "wolfe",
-    "input" : {
-      "sessionId" : null,
-      "code" : "val s = Seqs(Bools,3).Var\nval count = sum(0 until 3) { i => I(s(i))}\ncount(s := IndexedSeq(true,true,true))",
-      "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x := vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s := IndexedSeq(false,true),i := 1)\",\"s.length(s := IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m := Map(true -> 1.0, false -> 2.0),k := false)\"]"
-      },
       "outputFormat" : null
     }
   }, {
     "id" : 37,
-    "compiler" : "heading3",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "Constraints",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 38,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Often real-value functions need to be defined over a *constrained* subset of the original domain. In Wolfe this can be achieved using the `term.subjectTo(predicate)` operator on real-valued terms. This operator returns \\\\(-\\infty\\\\) if the `predicate` term evaluates to `false` and the value of `term` otherwise.   ",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 39,
-    "compiler" : "wolfe",
-    "input" : {
-      "sessionId" : null,
-      "code" : "val x = Doubles.Var\nval y = Ints.Var\n(x subjectTo (y === 3))(x := 2.0, y := 2)",
-      "extraFields" : {
-        "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x := vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s := IndexedSeq(false,true),i := 1)\",\"s.length(s := IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m := Map(true -> 1.0, false -> 2.0),k := false)\",\"val s = Seqs(Bools,3).Var\\nval count = sum(0 until 3) { i => I(s(i))}\\ncount(s := IndexedSeq(true,true,true))\"]"
-      },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 40,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Term Types",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 41,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Scala programs in general, and Wolfe terms in particular, are type-safe. That is, before you can execute code, the compiler will complain when you try to add two objects which aren't numbers, or when you try to access the i-th element of a term that isn't a sequence. This avoids many problems that only emerge at runtime in dynamic languages. However in Wolfe it also means that you need to explicitly type the arguments of methods that operate on terms to create new terms, and this can quickly get out of hand if you work with generic types (where types themselves have other types as parameters).  \n\nFor example, imagine you want to write a method that creates a term representing the number of verbs in a sentence, as shown below. With generic types the `count` method would require the input type `VarSeqDom[Tuple2Dom[DiscreteDom[String],DiscreteDom[String]]]#Term`. To avoid such long signatures, in Wolfe each domain has a type member `Term` that refers to the type of terms the domain provides. This allows the `count` signature to be much more concise by using `Sentences.Term` as input type.             ",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 42,
-    "compiler" : "wolfe",
-    "input" : {
-      "sessionId" : null,
-      "code" : "val Words = List(\"the\",\"cat\",\"sat\").toDom\nval Tags = List(\"DT\",\"NN\",\"VBD\").toDom\nval Tokens = Pairs(Words,Tags)\nval Sentences = Seqs(Tokens,0,3)\nval s = Sentences.Var\n\ndef count(s:Sentences.Term) = \n    sum(s){ t => I(t._1 === Tags.Const(\"VBD\")) }\n\ncount(s)(s := IndexedSeq(\"the\"->\"DT\",\"cat\" -> \"NN\", \"sat\" -> \"VBD\"))    ",
+      "code" : "val Words = List(\"the\",\"cat\",\"sat\").toDom\nval Tags = List(\"DT\",\"NN\",\"VBD\").toDom\nval Tokens = Pairs(Words,Tags)\nval Sentences = Seqs(Tokens,0,3)\nval s = Sentences.Var\n\ndef count(s:Sentences.Term) = \n  sum(s){ t => I(t._1 === Tags.Const(\"VBD\")) }\n\ncount(s).eval(s := IndexedSeq(\"the\"->\"DT\",\"cat\" -> \"NN\", \"sat\" -> \"VBD\"))    ",
       "extraFields" : {
         "aggregatedCells" : "[\"val b = Bools.Var\\nb(b := true)\",\"val s = Seqs(Bools,2).Var\\ns(s := IndexedSeq(false,true))\",\"val b = Bools.Const(true)\\nb()\",\"implicit val Instances = Seqs(Bools,2)\\nval t = Seq(false,true).toConst\\nt()\",\"val d:DoubleTerm = 1.0\\nd()\",\"val x = Bools.Var\\nval y = Bools.Var\\nval or = (x || y)\\nor(x := false, y := true)\",\"I(or)(x := false, y := true)\",\"val b = Bools.Var\\nval x = Doubles.Var\\nlog(x + I(b) * 2.0)(b := false, x := 2.0)\",\"val i = Ints.Var\\n(i * 2 - 1)(i := 5)\",\"val x = Vectors(2).Var\\n(x dot x)(x := vector(1,2))\",\" val s = Seqs(Bools,0,2).Var\\n val i = Ints(0 until 2).Var\\n s(i)(s := IndexedSeq(false,true),i := 1)\",\"s.length(s := IndexedSeq(false))\",\"val m = Maps(Bools,Doubles).Var\\nval k = Bools.Var\\nm(k)(m := Map(true -> 1.0, false -> 2.0),k := false)\",\"val s = Seqs(Bools,3).Var\\nval count = sum(0 until 3) { i => I(s(i))}\\ncount(s := IndexedSeq(true,true,true))\",\"val x = Doubles.Var\\nval y = Ints.Var\\n(x subjectTo (y === 3))(x := 2.0, y := 2)\"]"
       },
       "outputFormat" : null
     }
   } ],
-  "config" : { }
+  "config" : {
+    "autosave" : "false"
+  }
 }

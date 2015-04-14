@@ -5,48 +5,12 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Machine learning models are often represented as scalar functions \n$$f:\\mathcal{S}\\mapsto\\mathbb{R}$$ \nfrom a _domain_ (or a _sample space_ or _search space_) \\\\(\\mathcal{S}\\\\) to reals \\\\(\\mathbb{R}\\\\) that \nmeasure the score or probability of an element in the search space, or an empirical loss of an element in the space of model parameters. For example, we could talk about (word,part-of-speech-tag) pair, or something more structured \nsuch as a sequence of observations and labels, or a set of parameter vectors in a matrix factorization model. \n\nIn Wolfe you develop such scalar functions, and the\nfirst step is to define the domains \\\\(\\mathcal{S}\\\\) of such functions. To this end Wolfe provides a [Domain](todo) class. \n",
+      "code" : "Machine learning models are often represented as scalar functions \n$$f:\\mathcal{S}\\mapsto\\mathbb{R}$$ \nfrom a _domain_ (or a _sample space_ or _search space_) \\\\(\\mathcal{S}\\\\) to reals \\\\(\\mathbb{R}\\\\) that \nmeasure the score or probability of an element in the search space, or an empirical loss of an element in the space of model parameters. For example, we could talk about (word,part-of-speech-tag) pair, or something more structured \nsuch as a sequence of observations and labels, or a set of parameter vectors in a matrix factorization model. \n\nIn Wolfe you develop such scalar functions, and the\nfirst step is to define the domains \\\\(\\mathcal{S}\\\\) of such functions. To this end Wolfe provides a [Domain](todo) class. \n\n### Naming Conventions\n\nDomains are core building blocks in Wolfe, and it is useful to spot them quickly when looking at code, and to differentiate them from normal collections. To this end Wolfe defines a set of [naming conventions](https://github.com/wolfe-pack/wolfe/wiki/Wolfe-Naming-Conventions). These conventions require domain variables (as well as constructors) to alway be _uppercase_ and _plural_, or _uppercase_ only if the domain is a single letter.\n\n### Discrete Domains\n\nSay we want to classify words as nouns or verbs. At the core of this task is an _discrete_ domain\nof labels, in this case \"Noun\" and \"Verb.\" In Wolfe you can use simple scala iterables to define\nsuch discrete domains, such as a [List](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.List). Provided that you have imported `ml.wolfe.term.TermImplicits._`, the `toDom` method on any iterable creates a discrete domain with elements of the given iterable.  ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
     "id" : 1,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Naming Conventions",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 2,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Domains are core building blocks in Wolfe, and it is useful to spot them quickly when looking at code, and to differentiate them from normal collections. To this end Wolfe defines a set of [naming conventions](https://github.com/wolfe-pack/wolfe/wiki/Wolfe-Naming-Conventions). These conventions require domain variables (as well as constructors) to alway be _uppercase_ and _plural_, or _uppercase_ only if the domain is a single letter.",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 3,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Discrete Domains",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 4,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Say we want to classify words as nouns or verbs. At the core of this task is an _discrete_ domain\nof labels, in this case \"Noun\" and \"Verb.\" In Wolfe you can use simple scala iterables to define\nsuch discrete domains, such as a [List](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.List). Provided that you have imported `ml.wolfe.term.TermImplicits._`, the `toDom` method on any iterable creates a discrete domain with elements of the given iterable.  ",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 5,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -57,7 +21,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 6,
+    "id" : 2,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -66,7 +30,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 7,
+    "id" : 3,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -77,7 +41,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 36,
+    "id" : 4,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -86,7 +50,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 37,
+    "id" : 5,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -97,25 +61,16 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 8,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Integer Domains",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 9,
+    "id" : 6,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Often we need ranges of integers as domain. Not as much when defining search spaces, but regularly when we define running indices as arguments of sums (forward link). You can pass any  [Range](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.Range)\nobject to the `Ints` constructor to create a integer range domain.  ",
+      "code" : "### Integer Domains\n\nOften we need ranges of integers as domain. Not as much when defining search spaces, but regularly when we define running indices as arguments of sums (forward link). You can pass any  [Range](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.Range)\nobject to the `Ints` constructor to create a integer range domain.  ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 10,
+    "id" : 7,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -126,7 +81,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 11,
+    "id" : 8,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -135,7 +90,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 12,
+    "id" : 9,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -146,25 +101,16 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 29,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Tuple Domains",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 30,
+    "id" : 10,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "In practice elements in domains have several interacting components. For example, \nin the case of part-of-speech classification a token has a word and a part-of-speech,\nand the former helps to determine the latter. In Wolfe a simple way to construct a corresponding domain are Tuple Domains. Currently Wolfe only supports pairs. ",
+      "code" : "### Tuple Domains\n\nIn practice elements in domains have several interacting components. For example, \nin the case of part-of-speech classification a token has a word and a part-of-speech,\nand the former helps to determine the latter. In Wolfe a simple way to construct a corresponding domain are Tuple Domains. Currently Wolfe only supports pairs. ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 31,
+    "id" : 11,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -175,25 +121,16 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 13,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Case Class Domains",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 14,
+    "id" : 12,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Tuple domains are convenient ways to construct multivariate domains. However, when reading code that uses tuples, you will find a lot of tuple field accessor expressions such as `t._2` that make it difficult to remember what is what. In Wolfe this can be overcome by using Scala [case classes](http://www.codecommit.com/blog/scala/case-classes-are-cool) as elements in a domain. \n\nTo compactly describe a (factorized) domain of case class objects, Wolfe provides the `@domain` macro. When used as annotation for a case class, this macro generates a `Values` constructor for the case class that can be used to compose a domain of objects of this case class based on domains for the arguments of the case class. ",
+      "code" : "### Case Class Domains\n\nTuple domains are convenient ways to construct multivariate domains. However, when reading code that uses tuples, you will find a lot of tuple field accessor expressions such as `t._2` that make it difficult to remember what is what. In Wolfe this can be overcome by using Scala [case classes](http://www.codecommit.com/blog/scala/case-classes-are-cool) as elements in a domain. \n\nTo compactly describe a (factorized) domain of case class objects, Wolfe provides the `@domain` macro. When used as annotation for a case class, this macro generates a `Values` constructor for the case class that can be used to compose a domain of objects of this case class based on domains for the arguments of the case class. ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 15,
+    "id" : 13,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -204,25 +141,16 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 16,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Sequences",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 17,
+    "id" : 14,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Many real world problems, such as tagging in NLP, or gene sequencing,\nconcern sequences of objects. In Wolfe `Seqs(elements,minLength,maxLength)` takes an element \ndomain `elements` and generates all possible sequences over this domain, with minimum length `minLength` and up to a maximum length `maxLength`.\n\n",
+      "code" : "### Sequences\n\nMany real world problems, such as tagging in NLP, or gene sequencing,\nconcern sequences of objects. In Wolfe `Seqs(elements,minLength,maxLength)` takes an element \ndomain `elements` and generates all possible sequences over this domain, with minimum length `minLength` and up to a maximum length `maxLength`.\n\n",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 18,
+    "id" : 15,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -233,7 +161,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 19,
+    "id" : 16,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
@@ -242,7 +170,7 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 28,
+    "id" : 17,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -253,25 +181,16 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 20,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Maps",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 21,
+    "id" : 18,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Wolfe supports the Scala [Map](http://www.scala-lang.org/api/2.10.4/index.html#scala.collection.immutable.Map) class to \nrepresent mappings from a domain to a range. Such mappings can be very useful, for example \nto represent relations and graphs, as shown in the example below. To generate \nall possible maps from a domain `dom` to a range `range` use the `Maps(dom,range)`\nfunction.\n\n",
+      "code" : "### Maps\n\nWolfe supports the Scala [Map](http://www.scala-lang.org/api/2.10.4/index.html#scala.collection.immutable.Map) class to \nrepresent mappings from a domain to a range. Such mappings can be very useful, for example \nto represent relations and graphs, as shown in the example below. To generate \nall possible maps from a domain `dom` to a range `range` use the `Maps(dom,range)`\nfunction.\n\n",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 32,
+    "id" : 19,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -282,43 +201,16 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 22,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Predicates",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 23,
+    "id" : 20,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "In Wolfe predicates are special cases of maps from some domain to {true,false}. \nAs they are frequently useful, Wolfe provide syntactic sugar to make their use easier.\n\n",
+      "code" : "### Predicates\n\nIn Wolfe predicates are special cases of maps from some domain to {true,false}. \nAs they are frequently useful, Wolfe provide syntactic sugar to make their use easier.\n\n### Continuous Domains\n\nOften elements in search space have real-valued continuous attributes. To model such attributes Wolfe provides the built-in `Doubles` domain, representing all 32 bit `Double` values.  \n\n",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 24,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Continuous Domains",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 25,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Often elements in search space have real-valued continuous attributes. To model such attributes Wolfe provides the built-in `Doubles` domain, representing all 32 bit `Double` values.  \n\n",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 33,
+    "id" : 21,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -329,34 +221,16 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 34,
+    "id" : 22,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Notice that even though technically doable, for continuous domains the `toIterable` method is not implemented, as it never makes sense to iterate through all 32 bit Double values.",
+      "code" : "Notice that even though technically doable, for continuous domains the `toIterable` method is not implemented, as it never makes sense to iterate through all 32 bit Double values.\n\n### Vector Domains\n\nIt is common to represent parameters using vectors, and hence Wolfe provides a vector domain as well. The vector domain constructor requires the specification of the dimension of the vectors of the domain to be created ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 26,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Vector Domains",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 27,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "It is common to represent parameters using vectors, and hence Wolfe provides a vector domain as well. The vector domain constructor requires the specification of the dimension of the vectors of the domain to be created ",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 35,
+    "id" : 23,
     "compiler" : "wolfe",
     "input" : {
       "sessionId" : null,
@@ -367,5 +241,7 @@
       "outputFormat" : null
     }
   } ],
-  "config" : { }
+  "config" : {
+    "autosave" : "false"
+  }
 }

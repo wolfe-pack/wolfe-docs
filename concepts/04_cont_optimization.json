@@ -5,31 +5,13 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Many learning algorithms involve search for parameters that maximize a _learning objective_ (or minimize an empirical _learning loss_). In most cases this means optimizing a real-valued function over a continuous search or parameter space. Wolfe currently solves such optimization problems by [automatic differentiation](todo) of the objective term in combination with gradient-based numerical optimization algorithms. ",
+      "code" : "Many learning algorithms involve search for parameters that maximize a _learning objective_ (or minimize an empirical _learning loss_). In most cases this means optimizing a real-valued function over a continuous search or parameter space. Wolfe currently solves such optimization problems by [automatic differentiation](todo) of the objective term in combination with gradient-based numerical optimization algorithms. \n\n### Automatic Differentiation\n\nWhen you define a term with free continuous, vector or matrix variables you can ask Wolfe to calculate the gradient with respect to these variables. This is achieved through forward propagation (evaluation) followed by [backpropagation](todo) of the error signal. Usually you don't need these gradients directly, they are primarily used within optimization algorithms. However, explicitly calculating the gradient can still be useful, for example for debugging or when one develops extensions ([new terms](todo)) for Wolfe. \n\nTo get the gradient of term `t` with respect to the free variable `x` use `t.diff(x1)(x1 := v1, x2 := v2, ...)`. \n\n",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
     "id" : 1,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Automatic Differentiation",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 2,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "When you define a term with free continuous, vector or matrix variables you can ask Wolfe to calculate the gradient with respect to these variables. This is achieved through forward propagation (evaluation) followed by [backpropagation](todo) of the error signal. Usually you don't need these gradients directly, they are primarily used within optimization algorithms. However, explicitly calculating the gradient can still be useful, for example for debugging or when one develops extensions ([new terms](todo)) for Wolfe. \n\nTo get the gradient of term `t` with respect to the free variable `x` use `t.diff(x1)(x1 := v1, x2 := v2, ...)`. \n\n",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 3,
-    "compiler" : "wolfe",
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
       "code" : "val x = Doubles.Var\nval b = Bools.Var\nval t = x * 4.0 - x * x * I(b)\nt.diff(x)(x := 1.0, b := true)",
@@ -39,96 +21,51 @@
       "outputFormat" : null
     }
   }, {
-    "id" : 4,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Gradient Based Optimization",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 5,
+    "id" : 2,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Once a objective over a continuous domain is defined, it can be optimized using the `argmax(dom)(obj)` operator, where `dom` is a continuous domain and `obj` is a function of type `dom.Term => DoubleTerm`.  ",
+      "code" : "### Gradient Based Optimization\n\nOnce a objective over a continuous domain is defined, it can be optimized using the `argmax(dom)(obj)` operator, where `dom` is a continuous domain and `obj` is a function of type `dom.Term => DoubleTerm`.  ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 6,
-    "compiler" : "wolfe",
+    "id" : 3,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "def obj(x:DoubleTerm) = x * 4.0 - x * x \nval term = argmax(Doubles)(obj) by adaGrad(AdaGradParameters(50,1))\nterm()",
+      "code" : "def obj(x:DoubleTerm) = x * 4.0 - x * x \nval term = argmax(Doubles)(obj) by adaGrad(AdaGradParameters(50,1))\nterm.eval()",
       "extraFields" : {
         "aggregatedCells" : "[\"val x = Doubles.Var\\nval b = Bools.Var\\nval t = x * 4.0 - x * x * I(b)\\nt.diff(x)(x := 1.0, b := true)\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 7,
+    "id" : 4,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "Notice that Wolfe supports stochastic optimization as well, but this requires the use of [stochastic terms](todo). ",
+      "code" : "Notice that Wolfe supports stochastic optimization as well, but this requires the use of [stochastic terms](todo). \n\n### Composed Parameter Spaces\nIn some cases the your parameter space can be captured with a single vector, or maybe matrix. In others it may be composed of vectors of different roles and dimensions. For example, a document classifier may use as parameters a weight vector for traditional features and one low-dimensional embedding per word.  ",
       "extraFields" : { },
       "outputFormat" : null
     }
   }, {
-    "id" : 8,
-    "compiler" : "heading3",
+    "id" : 5,
+    "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "Composed Parameter Spaces",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 9,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "In some cases the your parameter space can be captured with a single vector, or maybe matrix. In others it may be composed of vectors of different roles and dimensions. For example, a document classifier may use as parameters a weight vector for traditional features and one low-dimensional embedding per word.  ",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 10,
-    "compiler" : "wolfe",
-    "input" : {
-      "sessionId" : null,
-      "code" : "@domain case class Theta(x:Vect,y:IndexedSeq[Double])\nval Thetas = Theta.Values(Vectors(2),Seqs(Doubles,3))\ndef obj(t:Thetas.Term) = \n  sum(0 until 3) { i => 4.0 * t.y(i) - t.y(i) * t.y(i)} + (t.x dot t.x)\nval term = argmax(Thetas)(obj) by adaGrad(AdaGradParameters(50,1))\nterm()",
+      "code" : "@domain case class Theta(x:Vect,y:IndexedSeq[Double])\nval Thetas = Theta.Values(Vectors(2),Seqs(Doubles,3))\ndef obj(t:Thetas.Term) = \n  sum(0 until 3) { i => 4.0 * t.y(i) - t.y(i) * t.y(i)} + (t.x dot t.x)\nval term = argmax(Thetas)(obj) by adaGrad(AdaGradParameters(50,1))\nterm.eval()",
       "extraFields" : {
-        "aggregatedCells" : "[\"val x = Doubles.Var\\nval b = Bools.Var\\nval t = x * 4.0 - x * x * I(b)\\nt.diff(x)(x := 1.0, b := true)\",\"def obj(x:DoubleTerm) = x * 4.0 - x * x \\nval term = argmax(Doubles)(obj) by adaGrad(AdaGradParameters(50,1))\\nterm()\"]"
+        "aggregatedCells" : "[\"val x = Doubles.Var\\nval b = Bools.Var\\nval t = x * 4.0 - x * x * I(b)\\nt.diff(x)(x := 1.0, b := true)\",\"def obj(x:DoubleTerm) = x * 4.0 - x * x \\nval term = argmax(Doubles)(obj) by adaGrad(AdaGradParameters(50,1))\\nterm.eval()\"]"
       },
       "outputFormat" : null
     }
   }, {
-    "id" : 11,
-    "compiler" : "heading3",
-    "input" : {
-      "sessionId" : null,
-      "code" : "Nested Discrete Optimization",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 12,
+    "id" : 6,
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "",
-      "extraFields" : { },
-      "outputFormat" : null
-    }
-  }, {
-    "id" : 13,
-    "compiler" : "markdown",
-    "input" : {
-      "sessionId" : null,
-      "code" : "",
+      "code" : "### Nested Discrete Optimization\n\n",
       "extraFields" : { },
       "outputFormat" : null
     }
