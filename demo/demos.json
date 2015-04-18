@@ -1,0 +1,14 @@
+{
+  "name" : "List of Wolfe Demos",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "## 1. [NAACL 2015 Demo](/template/demo/wolfe-docs/demo/naacl-demo) - Natural Language Processing\n\n## 2. [NIPS 2014 Demo](/template/demo/wolfe-docs/demo/nips-demo) - Machine Learning ",
+      "extraFields" : { },
+      "outputFormat" : null
+    }
+  } ],
+  "config" : { }
+}
