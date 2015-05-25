@@ -1,0 +1,38 @@
+{
+  "name" : "Chunking with CRFs",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "import ml.wolfe.term.LearningObjective._\n@domain case class Input(words: IndexedSeq[String])\ntype Output = IndexedSeq[String]\ntype Instance = (Input, Output)\n//  val conlltrain = CoNLL2000.train.take(2).toIndexedSeq\n//  val conlltest = CoNLL2000.test.take(2).toIndexedSeq\n  val train = Seq(\n      Input(IndexedSeq(\"Welcome\", \"to\", \"Wolfe\", \"!\")) -> IndexedSeq(\"O\", \"O\", \"WOLFE\", \"omg\"),\n    Input(IndexedSeq(\"Wolfe\", \"is\", \"great\", \"!\")) -> IndexedSeq(\"WOLFE\", \"O\", \"O\", \"omg\")\n  )\n  val test = Seq(\n    Input(IndexedSeq(\"I\", \"love\", \"Wolfe\", \".\")) -> IndexedSeq(\"O\", \"O\", \"WOLFE\", \"omg\")\n  )\nval sentences = train ++ test\nval labels = sentences.flatMap(_._2).distinct\nval words = train.flatMap(_._1.words).distinct\nwords",
+      "extraFields" : {
+        "aggregatedCells" : "[]"
+      },
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asIterable List\"><span class=\"typeName\">List</span>\n<ol start=\"0\" class=\"fields\">\n  <li class=\"fieldValue\"><span class=\"asString String\">Welcome</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">to</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">Wolfe</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">!</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">is</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">great</span></li>\n</ol>\n</div></div>"
+    }
+  }, {
+    "id" : 1,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val maxLength = sentences.map(_._2.length).max\nval maxFeats = 20000\n\nimplicit val Thetas = Vectors(maxFeats)\nimplicit val Labels = labels.toDom\nimplicit val Words = words.toDom withOOV \"[OOV]\"\n\nimplicit val Inputs = Input.Objects(Seqs(Words, 0, maxLength))\nimplicit val Outputs = Seqs(Labels, 0, maxLength)\nimplicit val Instances = Pairs(Inputs, Outputs)\nimplicit val index = new SimpleIndex()\n\nval mpParams = MaxProductParameters(iterations = 1)\nval params = AdaGradParameters(epochs = 1, learningRate = 0.1)\ndef model(t: Thetas.Term)(x: Inputs.Term)(y: Outputs.Term) = {\n    sum(0 until x.words.length)(i => t dot feature('word, x.words(i), y(i)))\n} subjectTo (y.length === x.words.length) argmaxBy maxProduct(mpParams)\n\n//val thetaStar = learn(Thetas)(t => perceptron(train.toConst)(Outputs)(model(t))) using adaGrad(params)\nval thetaStar = feature('word, \"Wolfe\", \"WOLFE\")\nthetaStar",
+      "extraFields" : {
+        "aggregatedCells" : "[\"import ml.wolfe.term.LearningObjective._\\n@domain case class Input(words: IndexedSeq[String])\\ntype Output = IndexedSeq[String]\\ntype Instance = (Input, Output)\\n//  val conlltrain = CoNLL2000.train.take(2).toIndexedSeq\\n//  val conlltest = CoNLL2000.test.take(2).toIndexedSeq\\n  val train = Seq(\\n      Input(IndexedSeq(\\\"Welcome\\\", \\\"to\\\", \\\"Wolfe\\\", \\\"!\\\")) -> IndexedSeq(\\\"O\\\", \\\"O\\\", \\\"WOLFE\\\", \\\"omg\\\"),\\n    Input(IndexedSeq(\\\"Wolfe\\\", \\\"is\\\", \\\"great\\\", \\\"!\\\")) -> IndexedSeq(\\\"WOLFE\\\", \\\"O\\\", \\\"O\\\", \\\"omg\\\")\\n  )\\n  val test = Seq(\\n    Input(IndexedSeq(\\\"I\\\", \\\"love\\\", \\\"Wolfe\\\", \\\".\\\")) -> IndexedSeq(\\\"O\\\", \\\"O\\\", \\\"WOLFE\\\", \\\"omg\\\")\\n  )\\nval sentences = train ++ test\\nval labels = sentences.flatMap(_._2).distinct\\nval words = train.flatMap(_._1.words).distinct\\nwords\"]"
+      },
+      "outputFormat" : "<div class=\"text-center\"><i class=\"fa fa-refresh fa-spin fa-lg\"></i></div>"
+    }
+  }, {
+    "id" : 2,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val mpParams = MaxProductParameters(1)\nval result = argmax(Y)(y => model(thetaStar)(y) argmaxBy maxProduct(mpParams)).evalResult()\nD3FG.display(result.factorGraphs.head)",
+      "extraFields" : {
+        "aggregatedCells" : "[\"import ml.wolfe.term.LearningObjective._\\n@domain case class Input(words: IndexedSeq[String])\\ntype Output = IndexedSeq[String]\\ntype Instance = (Input, Output)\\n//  val conlltrain = CoNLL2000.train.take(2).toIndexedSeq\\n//  val conlltest = CoNLL2000.test.take(2).toIndexedSeq\\n  val train = Seq(\\n      Input(IndexedSeq(\\\"Welcome\\\", \\\"to\\\", \\\"Wolfe\\\", \\\"!\\\")) -> IndexedSeq(\\\"O\\\", \\\"O\\\", \\\"WOLFE\\\", \\\"omg\\\"),\\n    Input(IndexedSeq(\\\"Wolfe\\\", \\\"is\\\", \\\"great\\\", \\\"!\\\")) -> IndexedSeq(\\\"WOLFE\\\", \\\"O\\\", \\\"O\\\", \\\"omg\\\")\\n  )\\n  val test = Seq(\\n    Input(IndexedSeq(\\\"I\\\", \\\"love\\\", \\\"Wolfe\\\", \\\".\\\")) -> IndexedSeq(\\\"O\\\", \\\"O\\\", \\\"WOLFE\\\", \\\"omg\\\")\\n  )\\nval sentences = train ++ test\\nval labels = sentences.flatMap(_._2).distinct\\nval words = train.flatMap(_._1.words).distinct\\nwords\",\"val maxLength = sentences.map(_._2.length).max\\nval maxFeats = 20000\\n\\nimplicit val Thetas = Vectors(maxFeats)\\nimplicit val Labels = labels.toDom\\nimplicit val Words = words.toDom withOOV \\\"[OOV]\\\"\\n\\nimplicit val Inputs = Input.Objects(Seqs(Words, 0, maxLength))\\nimplicit val Outputs = Seqs(Labels, 0, maxLength)\\nimplicit val Instances = Pairs(Inputs, Outputs)\\nimplicit val index = new SimpleIndex()\\n\\ndef model(t: Thetas.Term)(x: Inputs.Term)(y: Outputs.Term) = {\\n    sum(0 until x.words.length)(i => t dot feature('word, x.words(i), y(i)))\\n} subjectTo (y.length === x.words.length) argmaxBy maxProduct(mpParams)\\n//val params = AdaGradParameters(epochs = 1, learningRate = 0.1)\\n//val mpParams = MaxProductParameters(iterations = 3)\\n//val thetaStar = learn(Thetas)(t => perceptron(train.toConst)(Outputs)(model(t))) using adaGrad(params)\\nval thetaStar = feature('word, \\\"Wolfe\\\", \\\"WOLFE\\\")\\nthetaStar\"]"
+      },
+      "outputFormat" : "<div class=\"string-result\"><span class=\"label label-danger\">Error!</span>\n<pre class=\"error\"><console>:71: error: not found: value mpParams\n              } subjectTo (y.length === x.words.length) argmaxBy maxProduct(mpParams)\n                                                                            ^\n</console></pre></div>"
+    }
+  } ],
+  "config" : { }
+}
