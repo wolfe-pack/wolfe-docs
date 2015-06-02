@@ -7,7 +7,7 @@
       "sessionId" : null,
       "code" : "Many learning algorithms involve search for parameters that maximize a _learning objective_ (or minimize an empirical _learning loss_). In most cases this means optimizing a real-valued function over a continuous search or parameter space. Wolfe currently solves such optimization problems by [automatic differentiation](todo) of the objective term in combination with gradient-based numerical optimization algorithms. \n\n### Automatic Differentiation\n\nWhen you define a term with free continuous, vector or matrix variables you can ask Wolfe to calculate the gradient with respect to these variables. This is achieved through forward propagation (evaluation) followed by [backpropagation](todo) of the error signal. Usually you don't need these gradients directly, they are primarily used within optimization algorithms. However, explicitly calculating the gradient can still be useful, for example for debugging or when one develops extensions ([new terms](todo)) for Wolfe. \n\nTo get the gradient of term `t` with respect to the free variable `x` use `t.diff(x1)(x1 := v1, x2 := v2, ...)`. \n\n",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<p>Many learning algorithms involve search for parameters that maximize a <em>learning objective</em> (or minimize an empirical <em>learning loss</em>). In most cases this means optimizing a real-valued function over a continuous search or parameter space. Wolfe currently solves such optimization problems by <a href=\"todo\">automatic differentiation</a> of the objective term in combination with gradient-based numerical optimization algorithms. </p><h3>Automatic Differentiation</h3><p>When you define a term with free continuous, vector or matrix variables you can ask Wolfe to calculate the gradient with respect to these variables. This is achieved through forward propagation (evaluation) followed by <a href=\"todo\">backpropagation</a> of the error signal. Usually you don't need these gradients directly, they are primarily used within optimization algorithms. However, explicitly calculating the gradient can still be useful, for example for debugging or when one develops extensions (<a href=\"todo\">new terms</a>) for Wolfe. </p><p>To get the gradient of term <code>t</code> with respect to the free variable <code>x</code> use <code>t.diff(x1)(x1 := v1, x2 := v2, ...)</code>. </p>"
     }
   }, {
     "id" : 1,
@@ -18,7 +18,7 @@
       "extraFields" : {
         "aggregatedCells" : "[]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><span class=\"asString String\">2.0</span></div>"
     }
   }, {
     "id" : 2,
@@ -27,7 +27,7 @@
       "sessionId" : null,
       "code" : "### Gradient Based Optimization\n\nOnce a objective over a continuous domain is defined, it can be optimized using the `argmax(dom)(obj)` operator, where `dom` is a continuous domain and `obj` is a function of type `dom.Term => DoubleTerm`.  ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<h3>Gradient Based Optimization</h3><p>Once a objective over a continuous domain is defined, it can be optimized using the <code>argmax(dom)(obj)</code> operator, where <code>dom</code> is a continuous domain and <code>obj</code> is a function of type <code>dom.Term =&gt; DoubleTerm</code>. </p>"
     }
   }, {
     "id" : 3,
@@ -38,7 +38,7 @@
       "extraFields" : {
         "aggregatedCells" : "[\"val x = Doubles.Var\\nval b = Bools.Var\\nval t = x * 4.0 - x * x * I(b)\\nt.diff(x)(x := 1.0, b := true)\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><span class=\"asString String\">1.9999999999988005</span></div>"
     }
   }, {
     "id" : 4,
@@ -47,18 +47,18 @@
       "sessionId" : null,
       "code" : "Notice that Wolfe supports stochastic optimization as well, but this requires the use of [stochastic terms](todo). \n\n### Composed Parameter Spaces\nIn some cases the your parameter space can be captured with a single vector, or maybe matrix. In others it may be composed of vectors of different roles and dimensions. For example, a document classifier may use as parameters a weight vector for traditional features and one low-dimensional embedding per word.  ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<p>Notice that Wolfe supports stochastic optimization as well, but this requires the use of <a href=\"todo\">stochastic terms</a>. </p><h3>Composed Parameter Spaces</h3><p>In some cases the your parameter space can be captured with a single vector, or maybe matrix. In others it may be composed of vectors of different roles and dimensions. For example, a document classifier may use as parameters a weight vector for traditional features and one low-dimensional embedding per word. </p>"
     }
   }, {
     "id" : 5,
     "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "@domain case class Theta(x:Vect,y:IndexedSeq[Double])\nval Thetas = Theta.Values(Vectors(2),Seqs(Doubles,3))\ndef obj(t:Thetas.Term) = \n  sum(0 until 3) { i => 4.0 * t.y(i) - t.y(i) * t.y(i)} + (t.x dot t.x)\nval term = argmax(Thetas)(obj) by adaGrad(AdaGradParameters(50,1))\nterm.eval()",
+      "code" : "@domain case class Theta(x:Vect,y:IndexedSeq[Double])\nval Thetas = Theta.Values(Vectors(2),Seqs(Doubles,3))\ndef obj(t:Thetas.Term) = \n  sum(0 until 3) { i => 4.0 * t.y(i) - t.y(i) * t.y(i)} + (t.x dot t.x) \nval term = argmax(Thetas)(obj) by adaGrad(AdaGradParameters(50,1))\nterm.eval()",
       "extraFields" : {
         "aggregatedCells" : "[\"val x = Doubles.Var\\nval b = Bools.Var\\nval t = x * 4.0 - x * x * I(b)\\nt.diff(x)(x := 1.0, b := true)\",\"def obj(x:DoubleTerm) = x * 4.0 - x * x \\nval term = argmax(Doubles)(obj) by adaGrad(AdaGradParameters(50,1))\\nterm.eval()\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asProduct Theta\"><span class=\"typeName\">Theta</span>\n<ul class=\"fields\">\n  <li class=\"field\"><span class=\"fieldName\">x</span> <span class=\"fieldValue\"><span class=\"asString String\">Tensor1(0.0,0.0)</span></span></li>\n  <li class=\"field\"><span class=\"fieldName\">y</span> <span class=\"fieldValue\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n    <ol start=\"0\" class=\"fields\">\n      <li class=\"fieldValue\"><span class=\"asString String\">1.9999999999988005</span></li>\n      <li class=\"fieldValue\"><span class=\"asString String\">1.9999999999988005</span></li>\n      <li class=\"fieldValue\"><span class=\"asString String\">1.9999999999988005</span></li>\n    </ol>\n</div></span></li>\n</ul>\n</div></div>"
     }
   }, {
     "id" : 6,
@@ -67,7 +67,7 @@
       "sessionId" : null,
       "code" : "### Nested Discrete Optimization\n\n",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<h3>Nested Discrete Optimization</h3>"
     }
   } ],
   "config" : { }

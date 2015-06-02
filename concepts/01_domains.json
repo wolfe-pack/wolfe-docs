@@ -7,7 +7,7 @@
       "sessionId" : null,
       "code" : "Machine learning models are often represented as scalar functions \n$$f:\\mathcal{S}\\mapsto\\mathbb{R}$$ \nfrom a _domain_ (or a _sample space_ or _search space_) \\\\(\\mathcal{S}\\\\) to reals \\\\(\\mathbb{R}\\\\) that \nmeasure the score or probability of an element in the search space, or an empirical loss of an element in the space of model parameters. For example, we could talk about (word,part-of-speech-tag) pair, or something more structured \nsuch as a sequence of observations and labels, or a set of parameter vectors in a matrix factorization model. \n\nIn Wolfe you develop such scalar functions, and the\nfirst step is to define the domains \\\\(\\mathcal{S}\\\\) of such functions. To this end Wolfe provides a [Domain](todo) class. \n\n### Naming Conventions\n\nDomains are core building blocks in Wolfe, and it is useful to spot them quickly when looking at code, and to differentiate them from normal collections. To this end Wolfe defines a set of [naming conventions](https://github.com/wolfe-pack/wolfe/wiki/Wolfe-Naming-Conventions). These conventions require domain variables (as well as constructors) to alway be _uppercase_ and _plural_, or _uppercase_ only if the domain is a single letter.\n\n### Discrete Domains\n\nSay we want to classify words as nouns or verbs. At the core of this task is an _discrete_ domain\nof labels, in this case \"Noun\" and \"Verb.\" In Wolfe you can use simple scala iterables to define\nsuch discrete domains, such as a [List](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.List). Provided that you have imported `ml.wolfe.term.TermImplicits._`, the `toDom` method on any iterable creates a discrete domain with elements of the given iterable.  ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<p>Machine learning models are often represented as scalar functions <span class=\"MathJax_Preview\" style=\"color: inherit;\"></span><div class=\"MathJax_Display\" style=\"text-align: center;\"><span class=\"MathJax\" id=\"MathJax-Element-1-Frame\"><nobr><span class=\"math\" id=\"MathJax-Span-1\" role=\"math\" style=\"width: 5.182em; display: inline-block;\"><span style=\"display: inline-block; position: relative; width: 4.289em; height: 0px; font-size: 120%;\"><span style=\"position: absolute; clip: rect(2.146em 1000.003em 3.336em -999.997em); top: -2.973em; left: 0.003em;\"><span class=\"mrow\" id=\"MathJax-Span-2\"><span class=\"mi\" id=\"MathJax-Span-3\" style=\"font-family: STIXGeneral-Italic;\">f<span style=\"display: inline-block; overflow: hidden; height: 1px; width: 0.122em;\"></span></span><span class=\"mo\" id=\"MathJax-Span-4\" style=\"font-family: STIXGeneral-Regular; padding-left: 0.301em;\">:</span><span class=\"texatom\" id=\"MathJax-Span-5\" style=\"padding-left: 0.301em;\"><span class=\"mrow\" id=\"MathJax-Span-6\"><span class=\"mi\" id=\"MathJax-Span-7\" style=\"font-family: STIXNonUnicode-Italic;\"><span style=\"display: inline-block; overflow: hidden; height: 1px; width: 0.063em;\"></span></span></span></span><span class=\"mo\" id=\"MathJax-Span-8\" style=\"font-family: STIXGeneral-Regular; padding-left: 0.301em;\">↦</span><span class=\"texatom\" id=\"MathJax-Span-9\" style=\"padding-left: 0.301em;\"><span class=\"mrow\" id=\"MathJax-Span-10\"><span class=\"mi\" id=\"MathJax-Span-11\" style=\"font-family: STIXGeneral-Regular;\">ℝ</span></span></span></span><span style=\"display: inline-block; width: 0px; height: 2.979em;\"></span></span></span><span style=\"border-left-width: 0.004em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.218em; vertical-align: -0.282em;\"></span></span></nobr></span></div><script type=\"math/tex; mode=display\" id=\"MathJax-Element-1\">f:\\mathcal{S}\\mapsto\\mathbb{R}</script> from a <em>domain</em> (or a <em>sample space</em> or <em>search space</em>) <span class=\"MathJax_Preview\" style=\"color: inherit;\"></span><span class=\"MathJax\" id=\"MathJax-Element-2-Frame\"><nobr><span class=\"math\" id=\"MathJax-Span-12\" role=\"math\" style=\"width: 0.896em; display: inline-block;\"><span style=\"display: inline-block; position: relative; width: 0.717em; height: 0px; font-size: 120%;\"><span style=\"position: absolute; clip: rect(2.146em 1000.003em 3.158em -999.997em); top: -2.973em; left: 0.003em;\"><span class=\"mrow\" id=\"MathJax-Span-13\"><span class=\"texatom\" id=\"MathJax-Span-14\"><span class=\"mrow\" id=\"MathJax-Span-15\"><span class=\"mi\" id=\"MathJax-Span-16\" style=\"font-family: STIXNonUnicode-Italic;\"><span style=\"display: inline-block; overflow: hidden; height: 1px; width: 0.063em;\"></span></span></span></span></span><span style=\"display: inline-block; width: 0px; height: 2.979em;\"></span></span></span><span style=\"border-left-width: 0.004em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.932em; vertical-align: -0.068em;\"></span></span></nobr></span><script type=\"math/tex\" id=\"MathJax-Element-2\">\\mathcal{S}</script> to reals <span class=\"MathJax_Preview\" style=\"color: inherit;\"></span><span class=\"MathJax\" id=\"MathJax-Element-3-Frame\"><nobr><span class=\"math\" id=\"MathJax-Span-17\" role=\"math\" style=\"width: 0.955em; display: inline-block;\"><span style=\"display: inline-block; position: relative; width: 0.777em; height: 0px; font-size: 120%;\"><span style=\"position: absolute; clip: rect(1.729em 1000.003em 2.741em -999.997em); top: -2.557em; left: 0.003em;\"><span class=\"mrow\" id=\"MathJax-Span-18\"><span class=\"texatom\" id=\"MathJax-Span-19\"><span class=\"mrow\" id=\"MathJax-Span-20\"><span class=\"mi\" id=\"MathJax-Span-21\" style=\"font-family: STIXGeneral-Regular;\">ℝ</span></span></span></span><span style=\"display: inline-block; width: 0px; height: 2.562em;\"></span></span></span><span style=\"border-left-width: 0.004em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.932em; vertical-align: -0.068em;\"></span></span></nobr></span><script type=\"math/tex\" id=\"MathJax-Element-3\">\\mathbb{R}</script> that measure the score or probability of an element in the search space, or an empirical loss of an element in the space of model parameters. For example, we could talk about (word,part-of-speech-tag) pair, or something more structured such as a sequence of observations and labels, or a set of parameter vectors in a matrix factorization model. </p><p>In Wolfe you develop such scalar functions, and the first step is to define the domains <span class=\"MathJax_Preview\" style=\"color: inherit;\"></span><span class=\"MathJax\" id=\"MathJax-Element-4-Frame\"><nobr><span class=\"math\" id=\"MathJax-Span-22\" role=\"math\" style=\"width: 0.896em; display: inline-block;\"><span style=\"display: inline-block; position: relative; width: 0.717em; height: 0px; font-size: 120%;\"><span style=\"position: absolute; clip: rect(2.146em 1000.003em 3.158em -999.997em); top: -2.973em; left: 0.003em;\"><span class=\"mrow\" id=\"MathJax-Span-23\"><span class=\"texatom\" id=\"MathJax-Span-24\"><span class=\"mrow\" id=\"MathJax-Span-25\"><span class=\"mi\" id=\"MathJax-Span-26\" style=\"font-family: STIXNonUnicode-Italic;\"><span style=\"display: inline-block; overflow: hidden; height: 1px; width: 0.063em;\"></span></span></span></span></span><span style=\"display: inline-block; width: 0px; height: 2.979em;\"></span></span></span><span style=\"border-left-width: 0.004em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.932em; vertical-align: -0.068em;\"></span></span></nobr></span><script type=\"math/tex\" id=\"MathJax-Element-4\">\\mathcal{S}</script> of such functions. To this end Wolfe provides a <a href=\"todo\">Domain</a> class. </p><h3>Naming Conventions</h3><p>Domains are core building blocks in Wolfe, and it is useful to spot them quickly when looking at code, and to differentiate them from normal collections. To this end Wolfe defines a set of <a href=\"https://github.com/wolfe-pack/wolfe/wiki/Wolfe-Naming-Conventions\">naming conventions</a>. These conventions require domain variables (as well as constructors) to alway be <em>uppercase</em> and <em>plural</em>, or <em>uppercase</em> only if the domain is a single letter.</p><h3>Discrete Domains</h3><p>Say we want to classify words as nouns or verbs. At the core of this task is an <em>discrete</em> domain of labels, in this case \"Noun\" and \"Verb.\" In Wolfe you can use simple scala iterables to define such discrete domains, such as a <a href=\"http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.List\">List</a>. Provided that you have imported <code>ml.wolfe.term.TermImplicits._</code>, the <code>toDom</code> method on any iterable creates a discrete domain with elements of the given iterable. </p>"
     }
   }, {
     "id" : 1,
@@ -18,7 +18,7 @@
       "extraFields" : {
         "aggregatedCells" : "[]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><span class=\"asString String\">Discretes(Verb,Noun)</span></div>"
     }
   }, {
     "id" : 2,
@@ -27,7 +27,7 @@
       "sessionId" : null,
       "code" : "As mentioned above, (discrete) domains can be mapped to iterables. This can be achieved by calling `toIterable` on the domain object. Notice that in practice mapping back to iterables is mostly used for inspecting and debugging domains. ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<p>As mentioned above, (discrete) domains can be mapped to iterables. This can be achieved by calling <code>toIterable</code> on the domain object. Notice that in practice mapping back to iterables is mostly used for inspecting and debugging domains. </p>"
     }
   }, {
     "id" : 3,
@@ -38,7 +38,7 @@
       "extraFields" : {
         "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asIterable AllSettings\"><span class=\"typeName\">AllSettings</span>\n<ul start=\"0\" class=\"fields\">\n  <li class=\"fieldValue\"><span class=\"asString String\">Verb</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">Noun</span></li>\n</ul>\n</div></div>"
     }
   }, {
     "id" : 4,
@@ -47,7 +47,7 @@
       "sessionId" : null,
       "code" : "Domains provide a range of methods, many of them mostly used internally when we compose the actual functions \\\\(f\\\\), and hence not discussed here. However, two methods that can be useful for understanding and inspecting domains are their `zero` and `one` methods which return a canonical *empty* and *full* value in the domain. For example, in continuous domains the `zero` element is 0.0, and `one` is 1.0. In discrete domains `zero` is the first element in the domain, and `one` the last. ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<p>Domains provide a range of methods, many of them mostly used internally when we compose the actual functions <span class=\"MathJax_Preview\" style=\"color: inherit;\"></span><span class=\"MathJax\" id=\"MathJax-Element-5-Frame\"><nobr><span class=\"math\" id=\"MathJax-Span-27\" role=\"math\" style=\"width: 0.539em; display: inline-block;\"><span style=\"display: inline-block; position: relative; width: 0.42em; height: 0px; font-size: 120%;\"><span style=\"position: absolute; clip: rect(1.729em 1000.003em 2.92em -999.997em); top: -2.557em; left: 0.003em;\"><span class=\"mrow\" id=\"MathJax-Span-28\"><span class=\"mi\" id=\"MathJax-Span-29\" style=\"font-family: STIXGeneral-Italic;\">f<span style=\"display: inline-block; overflow: hidden; height: 1px; width: 0.122em;\"></span></span></span><span style=\"display: inline-block; width: 0px; height: 2.562em;\"></span></span></span><span style=\"border-left-width: 0.004em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.218em; vertical-align: -0.282em;\"></span></span></nobr></span><script type=\"math/tex\" id=\"MathJax-Element-5\">f</script>, and hence not discussed here. However, two methods that can be useful for understanding and inspecting domains are their <code>zero</code> and <code>one</code> methods which return a canonical <em>empty</em> and <em>full</em> value in the domain. For example, in continuous domains the <code>zero</code> element is 0.0, and <code>one</code> is 1.0. In discrete domains <code>zero</code> is the first element in the domain, and <code>one</code> the last. </p>"
     }
   }, {
     "id" : 5,
@@ -58,7 +58,7 @@
       "extraFields" : {
         "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asProduct Tuple2\"><span class=\"typeName\">Tuple2</span>\n<ul class=\"fields\">\n  <li class=\"field\"><span class=\"fieldName\">_1</span> <span class=\"fieldValue\"><span class=\"asString String\">Verb</span></span></li>\n  <li class=\"field\"><span class=\"fieldName\">_2</span> <span class=\"fieldValue\"><span class=\"asString String\">Noun</span></span></li>\n</ul>\n</div></div>"
     }
   }, {
     "id" : 6,
@@ -67,7 +67,7 @@
       "sessionId" : null,
       "code" : "### Integer Domains\n\nOften we need ranges of integers as domain. Not as much when defining search spaces, but regularly when we define running indices as arguments of sums (forward link). You can pass any  [Range](http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.Range)\nobject to the `Ints` constructor to create a integer range domain.  ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<h3>Integer Domains</h3><p>Often we need ranges of integers as domain. Not as much when defining search spaces, but regularly when we define running indices as arguments of sums (forward link). You can pass any <a href=\"http://www.scala-lang.org/api/2.10.3/index.html#scala.collection.immutable.Range\">Range</a> object to the <code>Ints</code> constructor to create a integer range domain. </p>"
     }
   }, {
     "id" : 7,
@@ -76,9 +76,9 @@
       "sessionId" : null,
       "code" : "Ints(2 until 6).toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asIterable Range\"><span class=\"typeName\">Range</span>\n<ol start=\"0\" class=\"fields\">\n  <li class=\"fieldValue\"><span class=\"asString String\">2</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">3</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">4</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">5</span></li>\n</ol>\n</div></div>"
     }
   }, {
     "id" : 8,
@@ -87,18 +87,18 @@
       "sessionId" : null,
       "code" : "Often it is convenient to use the domain of _all_ integers:",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<p>Often it is convenient to use the domain of <em>all</em> integers:</p>"
     }
   }, {
     "id" : 9,
     "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "Ints.toString.take(10)",
+      "code" : "Ints.take(10)",
       "extraFields" : {
-        "aggregatedCells" : "[\"Ints(2 until 6).toIterable\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asIterable Range\"><span class=\"typeName\">Range</span>\n<ol start=\"0\" class=\"fields\">\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483648</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483647</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483646</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483645</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483644</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483643</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483642</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483641</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483640</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">-2147483639</span></li>\n</ol>\n</div></div>"
     }
   }, {
     "id" : 10,
@@ -107,7 +107,7 @@
       "sessionId" : null,
       "code" : "### Tuple Domains\n\nIn practice elements in domains have several interacting components. For example, \nin the case of part-of-speech classification a token has a word and a part-of-speech,\nand the former helps to determine the latter. In Wolfe a simple way to construct a corresponding domain are Tuple Domains. Currently Wolfe only supports pairs. ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<h3>Tuple Domains</h3><p>In practice elements in domains have several interacting components. For example, in the case of part-of-speech classification a token has a word and a part-of-speech, and the former helps to determine the latter. In Wolfe a simple way to construct a corresponding domain are Tuple Domains. Currently Wolfe only supports pairs. </p>"
     }
   }, {
     "id" : 11,
@@ -116,9 +116,9 @@
       "sessionId" : null,
       "code" : "val Tokens = Pairs(List(\"the\",\"dog\").toDom,List(\"DT\",\"NN\").toDom)\nTokens.toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asIterable AllSettings\"><span class=\"typeName\">AllSettings</span>\n<ul start=\"0\" class=\"fields\">\n  <li class=\"fieldValue\"><div class=\"asProduct Tuple2\"><span class=\"typeName\">Tuple2</span>\n    <ul class=\"fields\">\n      <li class=\"field\"><span class=\"fieldName\">_1</span> <span class=\"fieldValue\"><span class=\"asString String\">the</span></span></li>\n      <li class=\"field\"><span class=\"fieldName\">_2</span> <span class=\"fieldValue\"><span class=\"asString String\">DT</span></span></li>\n    </ul>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asProduct Tuple2\"><span class=\"typeName\">Tuple2</span>\n    <ul class=\"fields\">\n      <li class=\"field\"><span class=\"fieldName\">_1</span> <span class=\"fieldValue\"><span class=\"asString String\">the</span></span></li>\n      <li class=\"field\"><span class=\"fieldName\">_2</span> <span class=\"fieldValue\"><span class=\"asString String\">NN</span></span></li>\n    </ul>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asProduct Tuple2\"><span class=\"typeName\">Tuple2</span>\n    <ul class=\"fields\">\n      <li class=\"field\"><span class=\"fieldName\">_1</span> <span class=\"fieldValue\"><span class=\"asString String\">dog</span></span></li>\n      <li class=\"field\"><span class=\"fieldName\">_2</span> <span class=\"fieldValue\"><span class=\"asString String\">DT</span></span></li>\n    </ul>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asProduct Tuple2\"><span class=\"typeName\">Tuple2</span>\n    <ul class=\"fields\">\n      <li class=\"field\"><span class=\"fieldName\">_1</span> <span class=\"fieldValue\"><span class=\"asString String\">dog</span></span></li>\n      <li class=\"field\"><span class=\"fieldName\">_2</span> <span class=\"fieldValue\"><span class=\"asString String\">NN</span></span></li>\n    </ul>\n</div></li>\n</ul>\n</div></div>"
     }
   }, {
     "id" : 12,
@@ -127,7 +127,7 @@
       "sessionId" : null,
       "code" : "### Case Class Domains\n\nTuple domains are convenient ways to construct multivariate domains. However, when reading code that uses tuples, you will find a lot of tuple field accessor expressions such as `t._2` that make it difficult to remember what is what. In Wolfe this can be overcome by using Scala [case classes](http://www.codecommit.com/blog/scala/case-classes-are-cool) as elements in a domain. \n\nTo compactly describe a (factorized) domain of case class objects, Wolfe provides the `@domain` macro. When used as annotation for a case class, this macro generates a `Values` constructor for the case class that can be used to compose a domain of objects of this case class based on domains for the arguments of the case class. ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<h3>Case Class Domains</h3><p>Tuple domains are convenient ways to construct multivariate domains. However, when reading code that uses tuples, you will find a lot of tuple field accessor expressions such as <code>t._2</code> that make it difficult to remember what is what. In Wolfe this can be overcome by using Scala <a href=\"http://www.codecommit.com/blog/scala/case-classes-are-cool\">case classes</a> as elements in a domain. </p><p>To compactly describe a (factorized) domain of case class objects, Wolfe provides the <code>@domain</code> macro. When used as annotation for a case class, this macro generates a <code>Values</code> constructor for the case class that can be used to compose a domain of objects of this case class based on domains for the arguments of the case class. </p>"
     }
   }, {
     "id" : 13,
@@ -136,9 +136,9 @@
       "sessionId" : null,
       "code" : "@domain case class Person(age:Int, firstName:String)\nval Persons = Person.Values(Ints(30 until 32),List(\"Anna\",\"Bob\").toDom)\nPersons.toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asIterable AllSettings\"><span class=\"typeName\">AllSettings</span>\n<ul start=\"0\" class=\"fields\">\n  <li class=\"fieldValue\"><div class=\"asProduct Person\"><span class=\"typeName\">Person</span>\n    <ul class=\"fields\">\n      <li class=\"field\"><span class=\"fieldName\">age</span> <span class=\"fieldValue\"><span class=\"asString String\">30</span></span></li>\n      <li class=\"field\"><span class=\"fieldName\">firstName</span> <span class=\"fieldValue\"><span class=\"asString String\">Anna</span></span></li>\n    </ul>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asProduct Person\"><span class=\"typeName\">Person</span>\n    <ul class=\"fields\">\n      <li class=\"field\"><span class=\"fieldName\">age</span> <span class=\"fieldValue\"><span class=\"asString String\">30</span></span></li>\n      <li class=\"field\"><span class=\"fieldName\">firstName</span> <span class=\"fieldValue\"><span class=\"asString String\">Bob</span></span></li>\n    </ul>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asProduct Person\"><span class=\"typeName\">Person</span>\n    <ul class=\"fields\">\n      <li class=\"field\"><span class=\"fieldName\">age</span> <span class=\"fieldValue\"><span class=\"asString String\">31</span></span></li>\n      <li class=\"field\"><span class=\"fieldName\">firstName</span> <span class=\"fieldValue\"><span class=\"asString String\">Anna</span></span></li>\n    </ul>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asProduct Person\"><span class=\"typeName\">Person</span>\n    <ul class=\"fields\">\n      <li class=\"field\"><span class=\"fieldName\">age</span> <span class=\"fieldValue\"><span class=\"asString String\">31</span></span></li>\n      <li class=\"field\"><span class=\"fieldName\">firstName</span> <span class=\"fieldValue\"><span class=\"asString String\">Bob</span></span></li>\n    </ul>\n</div></li>\n</ul>\n</div></div>"
     }
   }, {
     "id" : 14,
@@ -147,7 +147,7 @@
       "sessionId" : null,
       "code" : "### Sequences\n\nMany real world problems, such as tagging in NLP, or gene sequencing,\nconcern sequences of objects. In Wolfe `Seqs(elements,minLength,maxLength)` takes an element \ndomain `elements` and generates all possible sequences over this domain, with minimum length `minLength` and up to a maximum length `maxLength`.\n\n",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<h3>Sequences</h3><p>Many real world problems, such as tagging in NLP, or gene sequencing, concern sequences of objects. In Wolfe <code>Seqs(elements,minLength,maxLength)</code> takes an element domain <code>elements</code> and generates all possible sequences over this domain, with minimum length <code>minLength</code> and up to a maximum length <code>maxLength</code>.</p>"
     }
   }, {
     "id" : 15,
@@ -156,9 +156,9 @@
       "sessionId" : null,
       "code" : "Seqs(Bools,1,2).toIterable",
       "extraFields" : {
-        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asIterable List\"><span class=\"typeName\">List</span>\n<ol start=\"0\" class=\"fields\">\n  <li class=\"fieldValue\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n    <ol start=\"0\" class=\"fields\">\n      <li class=\"fieldValue\"><span class=\"asString String\">false</span></li>\n    </ol>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n    <ol start=\"0\" class=\"fields\">\n      <li class=\"fieldValue\"><span class=\"asString String\">true</span></li>\n    </ol>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n    <ol start=\"0\" class=\"fields\">\n      <li class=\"fieldValue\"><span class=\"asString String\">false</span></li>\n      <li class=\"fieldValue\"><span class=\"asString String\">false</span></li>\n    </ol>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n    <ol start=\"0\" class=\"fields\">\n      <li class=\"fieldValue\"><span class=\"asString String\">false</span></li>\n      <li class=\"fieldValue\"><span class=\"asString String\">true</span></li>\n    </ol>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n    <ol start=\"0\" class=\"fields\">\n      <li class=\"fieldValue\"><span class=\"asString String\">true</span></li>\n      <li class=\"fieldValue\"><span class=\"asString String\">false</span></li>\n    </ol>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n    <ol start=\"0\" class=\"fields\">\n      <li class=\"fieldValue\"><span class=\"asString String\">true</span></li>\n      <li class=\"fieldValue\"><span class=\"asString String\">true</span></li>\n    </ol>\n</div></li>\n</ol>\n</div></div>"
     }
   }, {
     "id" : 16,
@@ -167,7 +167,7 @@
       "sessionId" : null,
       "code" : "The element domain can be any domain. In particular, it can be a\ncomposed domains itself.",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<p>The element domain can be any domain. In particular, it can be a composed domains itself.</p>"
     }
   }, {
     "id" : 17,
@@ -176,9 +176,9 @@
       "sessionId" : null,
       "code" : "Seqs(Persons,2,2).toIterable.take(2)",
       "extraFields" : {
-        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asIterable List\"><span class=\"typeName\">List</span>\n<ol start=\"0\" class=\"fields\">\n  <li class=\"fieldValue\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n    <ol start=\"0\" class=\"fields\">\n      <li class=\"fieldValue\"><div class=\"asProduct Person\"><span class=\"typeName\">Person</span>\n        <ul class=\"fields\">\n          <li class=\"field\"><span class=\"fieldName\">age</span> <span class=\"fieldValue\"><span class=\"asString String\">30</span></span></li>\n          <li class=\"field\"><span class=\"fieldName\">firstName</span> <span class=\"fieldValue\"><span class=\"asString String\">Anna</span></span></li>\n        </ul>\n</div></li>\n      <li class=\"fieldValue\"><div class=\"asProduct Person\"><span class=\"typeName\">Person</span>\n        <ul class=\"fields\">\n          <li class=\"field\"><span class=\"fieldName\">age</span> <span class=\"fieldValue\"><span class=\"asString String\">30</span></span></li>\n          <li class=\"field\"><span class=\"fieldName\">firstName</span> <span class=\"fieldValue\"><span class=\"asString String\">Anna</span></span></li>\n        </ul>\n</div></li>\n    </ol>\n</div></li>\n  <li class=\"fieldValue\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n    <ol start=\"0\" class=\"fields\">\n      <li class=\"fieldValue\"><div class=\"asProduct Person\"><span class=\"typeName\">Person</span>\n        <ul class=\"fields\">\n          <li class=\"field\"><span class=\"fieldName\">age</span> <span class=\"fieldValue\"><span class=\"asString String\">30</span></span></li>\n          <li class=\"field\"><span class=\"fieldName\">firstName</span> <span class=\"fieldValue\"><span class=\"asString String\">Anna</span></span></li>\n        </ul>\n</div></li>\n      <li class=\"fieldValue\"><div class=\"asProduct Person\"><span class=\"typeName\">Person</span>\n        <ul class=\"fields\">\n          <li class=\"field\"><span class=\"fieldName\">age</span> <span class=\"fieldValue\"><span class=\"asString String\">30</span></span></li>\n          <li class=\"field\"><span class=\"fieldName\">firstName</span> <span class=\"fieldValue\"><span class=\"asString String\">Bob</span></span></li>\n        </ul>\n</div></li>\n    </ol>\n</div></li>\n</ol>\n</div></div>"
     }
   }, {
     "id" : 18,
@@ -187,7 +187,7 @@
       "sessionId" : null,
       "code" : "### Maps\n\nWolfe supports the Scala [Map](http://www.scala-lang.org/api/2.10.4/index.html#scala.collection.immutable.Map) class to \nrepresent mappings from a domain to a range. Such mappings can be very useful, for example \nto represent relations and graphs, as shown in the example below. To generate \nall possible maps from a domain `dom` to a range `range` use the `Maps(dom,range)`\nfunction.\n\n",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<h3>Maps</h3><p>Wolfe supports the Scala <a href=\"http://www.scala-lang.org/api/2.10.4/index.html#scala.collection.immutable.Map\">Map</a> class to represent mappings from a domain to a range. Such mappings can be very useful, for example to represent relations and graphs, as shown in the example below. To generate all possible maps from a domain <code>dom</code> to a range <code>range</code> use the <code>Maps(dom,range)</code> function.</p>"
     }
   }, {
     "id" : 19,
@@ -196,9 +196,9 @@
       "sessionId" : null,
       "code" : "Maps(Ints(0 until 2),Bools).one",
       "extraFields" : {
-        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asMap Map\"><span class=\"typeName\">Map</span>\n<ul class=\"fields\">\n  <li class=\"field\"><span class=\"fieldName\"><span class=\"asString String\">0</span></span> <span class=\"fieldValue\"><span class=\"asString String\">true</span></span></li>\n  <li class=\"field\"><span class=\"fieldName\"><span class=\"asString String\">1</span></span> <span class=\"fieldValue\"><span class=\"asString String\">true</span></span></li>\n</ul>\n</div></div>"
     }
   }, {
     "id" : 20,
@@ -207,7 +207,7 @@
       "sessionId" : null,
       "code" : "### Predicates\n\nIn Wolfe predicates are special cases of maps from some domain to {true,false}. \nAs they are frequently useful, Wolfe provide syntactic sugar to make their use easier.\n\n### Continuous Domains\n\nOften elements in search space have real-valued continuous attributes. To model such attributes Wolfe provides the built-in `Doubles` domain, representing all 32 bit `Double` values.  \n\n",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<h3>Predicates</h3><p>In Wolfe predicates are special cases of maps from some domain to {true,false}. As they are frequently useful, Wolfe provide syntactic sugar to make their use easier.</p><h3>Continuous Domains</h3><p>Often elements in search space have real-valued continuous attributes. To model such attributes Wolfe provides the built-in <code>Doubles</code> domain, representing all 32 bit <code>Double</code> values. </p>"
     }
   }, {
     "id" : 21,
@@ -216,9 +216,9 @@
       "sessionId" : null,
       "code" : "Doubles.one",
       "extraFields" : {
-        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><span class=\"asString String\">1.0</span></div>"
     }
   }, {
     "id" : 22,
@@ -227,7 +227,7 @@
       "sessionId" : null,
       "code" : "Notice that even though technically doable, for continuous domains the `toIterable` method is not implemented, as it never makes sense to iterate through all 32 bit Double values.\n\n### Vector Domains\n\nIt is common to represent parameters using vectors, and hence Wolfe provides a vector domain as well. The vector domain constructor requires the specification of the dimension of the vectors of the domain to be created ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<p>Notice that even though technically doable, for continuous domains the <code>toIterable</code> method is not implemented, as it never makes sense to iterate through all 32 bit Double values.</p><h3>Vector Domains</h3><p>It is common to represent parameters using vectors, and hence Wolfe provides a vector domain as well. The vector domain constructor requires the specification of the dimension of the vectors of the domain to be created </p>"
     }
   }, {
     "id" : 23,
@@ -236,9 +236,9 @@
       "sessionId" : null,
       "code" : "Vectors(4).zero",
       "extraFields" : {
-        "aggregatedCells" : "[\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\",\"Doubles.one\"]"
+        "aggregatedCells" : "[\"val Tags = List(\\\"Verb\\\",\\\"Noun\\\").toDom\\nTags\",\"Tags.toIterable\",\"(Tags.zero,Tags.one)\",\"Ints(2 until 6).toIterable\",\"Ints.toString.take(10)\",\"val Tokens = Pairs(List(\\\"the\\\",\\\"dog\\\").toDom,List(\\\"DT\\\",\\\"NN\\\").toDom)\\nTokens.toIterable\",\"@domain case class Person(age:Int, firstName:String)\\nval Persons = Person.Values(Ints(30 until 32),List(\\\"Anna\\\",\\\"Bob\\\").toDom)\\nPersons.toIterable\",\"Seqs(Bools,1,2).toIterable\",\"Seqs(Persons,2,2).toIterable.take(2)\",\"Maps(Ints(0 until 2),Bools).one\",\"Doubles.one\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><span class=\"asString String\">Tensor1(0.0,0.0,0.0,0.0)</span></div>"
     }
   } ],
   "config" : {
