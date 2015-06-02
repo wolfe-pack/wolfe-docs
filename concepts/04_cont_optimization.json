@@ -54,7 +54,7 @@
     "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "@domain case class Theta(x:Vect,y:IndexedSeq[Double])\nval Thetas = Theta.Values(Vectors(2),Seqs(Doubles,3))\ndef obj(t:Thetas.Term) = \n  sum(0 until 3) { i => 4.0 * t.y(i) - t.y(i) * t.y(i)} + (t.x dot t.x) \nval term = argmax(Thetas)(obj) by adaGrad(AdaGradParameters(50,1))\nterm.eval()",
+      "code" : "@domain case class Theta(x:Vect,y:IndexedSeq[Double])\nval Thetas = Theta.Values(Vectors(2),Seqs(Doubles,3))\ndef obj(t:Thetas.Term) = \n  sum(0 until 3) { i => 4.0 * t.y(i) - t.y(i) * t.y(i)} + (t.x dot t.x) \nval term = argmax(Thetas)(obj) by adaGrad(AdaGradParameters(50,1))\nterm.eval()\n",
       "extraFields" : {
         "aggregatedCells" : "[\"val x = Doubles.Var\\nval b = Bools.Var\\nval t = x * 4.0 - x * x * I(b)\\nt.diff(x)(x := 1.0, b := true)\",\"def obj(x:DoubleTerm) = x * 4.0 - x * x \\nval term = argmax(Doubles)(obj) by adaGrad(AdaGradParameters(50,1))\\nterm.eval()\"]"
       },
@@ -65,9 +65,20 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "### Nested Discrete Optimization\n\n",
+      "code" : "### Nested Discrete Optimization\nOne of wolfe's most powerful features is the ability to nest discrete maximization within continuous objectives. This enables users to develop structured prediction models where the per-instance loss usually involves  discrete maximization over a structured search space, such as a sequence of tags.     \n\n(Note that the code below works in offline wolfe, but currently not in moro)",
       "extraFields" : { },
-      "outputFormat" : "<h3>Nested Discrete Optimization</h3>"
+      "outputFormat" : "<h3>Nested Discrete Optimization</h3><p>One of wolfe's most powerful features is the ability to nest discrete maximization within continuous objectives. This enables users to develop structured prediction models where the per-instance loss usually involves discrete maximization over a structured search space, such as a sequence of tags. </p><p>(Note that the code below works in offline wolfe, but currently not in moro)</p>"
+    }
+  }, {
+    "id" : 7,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "implicit val random = new scala.util.Random(0)\n\nval mpParams = BPParameters(10)\nval adaParams = AdaGradParameters(100, 0.1)\n\nval n = 5\nval X = Seqs(Ints(0 until 3), 0, n)\nval Y = Seqs(Bools, 0, n)\nimplicit val Weights = Vectors(5)\n\n@domain case class Instance(x: X.Value, y: Y.Value)\n\nimplicit val Instances = Instance.Values(X, Y)\n\n// val train = Seq(Instance(IndexedSeq(0, 1, 2), IndexedSeq(true, false, true))).toConst\n\n// def model(x: X.Term, w: Weights.Term)(y: Y.Term) =\n// sum(0 until x.length) { i => w dot oneHot(x(i), I(y(i)))}\n\n// def hammingDistance(y1: Y.Term, y2:Y.Term) =\n// sum(0 until y1.length) { j => I(y1(j) <-> ! y2(j)) }\n\n// def instanceScore(x: X.Term, yGold: Y.Term)(w: Weights.Term) = {\n// model(x, w)(yGold) -\n//   { max(Y)(y => model(x, w)(y) + hammingDistance(yGold, y)) by maxProduct(mpParams) }\n// }\n\n// def score(w: Weights.Term) = sum(train) { i => instanceScore(i.x, i.y)(w)} argmaxBy adaGrad(adaParams)\n\n// def stochasticScore(w: Weights.Term) = shuffled(train) { i => instanceScore(i.x, i.y)(w)} argmaxBy adaGrad(adaParams)\n\n// val wStar = argmax(Weights)(stochasticScore)\n\n// wStar.eval()",
+      "extraFields" : {
+        "aggregatedCells" : "[\"val x = Doubles.Var\\nval b = Bools.Var\\nval t = x * 4.0 - x * x * I(b)\\nt.diff(x)(x := 1.0, b := true)\",\"def obj(x:DoubleTerm) = x * 4.0 - x * x \\nval term = argmax(Doubles)(obj) by adaGrad(AdaGradParameters(50,1))\\nterm.eval()\",\"@domain case class Theta(x:Vect,y:IndexedSeq[Double])\\nval Thetas = Theta.Values(Vectors(2),Seqs(Doubles,3))\\ndef obj(t:Thetas.Term) = \\n  sum(0 until 3) { i => 4.0 * t.y(i) - t.y(i) * t.y(i)} + (t.x dot t.x) \\nval term = argmax(Thetas)(obj) by adaGrad(AdaGradParameters(50,1))\\nterm.eval()\\n\"]"
+      },
+      "outputFormat" : "<div class=\"string-result\"><span class=\"label label-danger\">Error!</span>\n<pre class=\"error\">java.lang.AbstractMethodError\n  at ml.wolfe.term.Dom$DomTerm$class.$init$(Dom.scala:49)\n  ... 77 elided\n</pre></div>"
     }
   } ],
   "config" : { }
