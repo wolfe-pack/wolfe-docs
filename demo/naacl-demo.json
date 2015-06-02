@@ -5,9 +5,9 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "\n\n## 1. [Relation Extraction with Matrix Factorization](/template/demo/wolfe-docs/demo/mf)\n\n## 2. [Tagging with CRFs](/template/demo/wolfe-docs/demo/tagging)\n\n## 3. [Dependency Parsing with Projectivity](/template/wolfe-docs/demo/demo/depparse)\n\n## 4. [Statistical Relational Learning with MLNs](/template/wolfe-docs/demo/demo/mln)\n",
+      "code" : "\n\n## 1. [Relation Extraction with Matrix Factorization](/template/demo/wolfe-docs/demo/mf)\n\n## 2. [Tagging with CRFs](/template/demo/wolfe-docs/demo/tagging)\n\n## 3. [Dependency Parsing with Projectivity](/template/wolfe-docs/demo/demo/depparse)\n\n## 4. [Statistical Relational Learning with MLNs](/template/demo/wolfe-docs/demo/mln)\n",
       "extraFields" : { },
-      "outputFormat" : "<h2>1. <a href=\"/template/demo/wolfe-docs/demo/mf\">Relation Extraction with Matrix Factorization</a></h2><h2>2. <a href=\"/template/demo/wolfe-docs/demo/tagging\">Tagging with CRFs</a></h2><h2>3. <a href=\"/template/wolfe-docs/demo/demo/depparse\">Dependency Parsing with Projectivity</a></h2><h2>4. <a href=\"/template/wolfe-docs/demo/demo/mln\">Statistical Relational Learning with MLNs</a></h2>"
+      "outputFormat" : "<h2>1. <a href=\"/template/demo/wolfe-docs/demo/mf\">Relation Extraction with Matrix Factorization</a></h2><h2>2. <a href=\"/template/demo/wolfe-docs/demo/tagging\">Tagging with CRFs</a></h2><h2>3. <a href=\"/template/wolfe-docs/demo/demo/depparse\">Dependency Parsing with Projectivity</a></h2><h2>4. <a href=\"/template/demo/wolfe-docs/demo/mln\">Statistical Relational Learning with MLNs</a></h2>"
     }
   } ],
   "config" : { }
