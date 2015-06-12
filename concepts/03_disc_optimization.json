@@ -7,7 +7,7 @@
       "sessionId" : null,
       "code" : "Discrete Optimization is a corner stone of [structured prediction](http://en.wikipedia.org/wiki/Structured_prediction). Both at _test time_ when you need to find the structure (say, sequence, parse tree, or general graph) with maximum score or probability, and at _training time_ when you try to ensure that the maximizing structure is equal to the _gold_ structure in the training set.\n\n### Exhaustive Search\n\nLet us first consider the simplest case of structured prediction: binary classification. Given a linear `model`, learned `weights` and an `observed` feature vector, we like to find the boolean label `y` that maximizes the score. This can be done using the `argmax(domain)(obj)` expression. Here `domain` is a domain object, and `obj` a function from `domain.Term` to `Doubles`. By default `argmax` performs an exhaustive search through the set of all objects in `domain`. Notice that `argmax` itself is a term, and hence needs a `()` to be evaluated.  ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<p>Discrete Optimization is a corner stone of <a href=\"http://en.wikipedia.org/wiki/Structured_prediction\">structured prediction</a>. Both at <em>test time</em> when you need to find the structure (say, sequence, parse tree, or general graph) with maximum score or probability, and at <em>training time</em> when you try to ensure that the maximizing structure is equal to the <em>gold</em> structure in the training set.</p><h3>Exhaustive Search</h3><p>Let us first consider the simplest case of structured prediction: binary classification. Given a linear <code>model</code>, learned <code>weights</code> and an <code>observed</code> feature vector, we like to find the boolean label <code>y</code> that maximizes the score. This can be done using the <code>argmax(domain)(obj)</code> expression. Here <code>domain</code> is a domain object, and <code>obj</code> a function from <code>domain.Term</code> to <code>Doubles</code>. By default <code>argmax</code> performs an exhaustive search through the set of all objects in <code>domain</code>. Notice that <code>argmax</code> itself is a term, and hence needs a <code>()</code> to be evaluated. </p>"
     }
   }, {
     "id" : 1,
@@ -18,7 +18,7 @@
       "extraFields" : {
         "aggregatedCells" : "[]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><span class=\"asString String\">false</span></div>"
     }
   }, {
     "id" : 2,
@@ -27,21 +27,19 @@
       "sessionId" : null,
       "code" : "### Message Passing\n\nThe above binary search space is obviously small enough to search brute-force. However, in general search spaces have combinatorial size, for example, when we are searching for sequences of given length. In such cases exhaustive search becomes infeasible. For such cases Wolfe offers combinatorial optimization algorithms based on message passing. To employ these methods, Wolfe analyses the term structure to create factor graphs, and then runs message passing on these graphs. \n\nTo use message passing when finding argmax values you can use the `argmax(dom)(obj) by method` expression. Currently Wolfe only supports the [Max-Product](todo) algorithm, a generalization of the [Viterbi](todo) algorithm. Below you find an example where a [linear chain CRF](todo) is optimized using Max-Product.            ",
       "extraFields" : { },
-      "outputFormat" : null
+      "outputFormat" : "<h3>Message Passing</h3><p>The above binary search space is obviously small enough to search brute-force. However, in general search spaces have combinatorial size, for example, when we are searching for sequences of given length. In such cases exhaustive search becomes infeasible. For such cases Wolfe offers combinatorial optimization algorithms based on message passing. To employ these methods, Wolfe analyses the term structure to create factor graphs, and then runs message passing on these graphs. </p><p>To use message passing when finding argmax values you can use the <code>argmax(dom)(obj) by method</code> expression. Currently Wolfe only supports the <a href=\"todo\">Max-Product</a> algorithm, a generalization of the <a href=\"todo\">Viterbi</a> algorithm. Below you find an example where a <a href=\"todo\">linear chain CRF</a> is optimized using Max-Product. </p>"
     }
   }, {
     "id" : 3,
     "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "val l = Ints(0 until 10).Var\nval Y = Seqs(Bools, 0, 5)\ndef model(y: Y.Term) = { \n  sum(0 until l) { i => I(y(i))} +\n  sum(0 until l - 1) { i => I(y(i) <-> !y(i + 1))}\n} subjectTo (y.length === l) \nval result = argmax(Y)(model) by maxProduct(MaxProductParameters(10))\nresult.eval(l := 5) ",
+      "code" : "val l = Ints(0 until 10).Var\nval Y = Seqs(Bools, 0, 5)\ndef model(y: Y.Term) = { \n  sum(0 until l) { i => I(y(i))} +\n  sum(0 until l - 1) { i => I(y(i) <-> !y(i + 1))}\n} subjectTo (y.length === l) \nval result = argmax(Y)(model) by maxProduct(BPParameters(10))\nresult.eval(l := 5) ",
       "extraFields" : {
         "aggregatedCells" : "[\"val W = Vectors(2)\\nval weights = W.Const(vector(1,2))\\nval observed = W.Const(vector(1,-1))\\nargmax(Bools)(y =>  I(y) * (weights dot observed)).eval()\"]"
       },
-      "outputFormat" : null
+      "outputFormat" : "<div class=\"string-result\"><div class=\"asIterable Vector\"><span class=\"typeName\">Vector</span>\n<ol start=\"0\" class=\"fields\">\n  <li class=\"fieldValue\"><span class=\"asString String\">true</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">false</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">true</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">false</span></li>\n  <li class=\"fieldValue\"><span class=\"asString String\">true</span></li>\n</ol>\n</div></div>"
     }
   } ],
-  "config" : {
-    "autosave" : "false"
-  }
+  "config" : { }
 }
