@@ -1,0 +1,242 @@
+{
+  "name" : "Classifier",
+  "cells" : [ {
+    "id" : 0,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "We will focus here on learning a simple logical gates. \n\n#### Data",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 1,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "@domain case class Input(in1:Boolean, in2:Boolean)\nval inputs = for (in1 <- IndexedSeq(false,true); \n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\n//use the facts that domains can be implicitly converted to iterables\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\nval and = inputs.map(i => i -> (i.in1 && i.in2))\nxor",
+      "extraFields" : {
+        "aggregatedCells" : "[]"
+      }
+    }
+  }, {
+    "id" : 2,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "### A Linear Model\nWe will first learn a linear classifier for this task. Formally such classifiers are scoring functions over input \\\\(\\mathbf{x}\\\\) and outputs \\\\(x\\\\), parametrized using a weight vector \\\\(\\boldsymbol{\\theta}\\\\):\n\n$$\n\\newcommand{\\x}{\\mathbf{x}}\n\\newcommand{\\y}{\\mathbf{y}}\n\\newcommand{\\params}{\\boldsymbol{\\theta}}\n\\newcommand{\\feats}{\\boldsymbol{\\phi}}\ns_{\\params}(\\x,y) =  \\langle \\params,\\feats(\\x,y) \\rangle \n$$\nHere \\\\(\\feats(\\x,y)\\\\) is feature representation of the input and output, and due to the inner product the model is linear with respect to this representation. Notice that this formulation is a generalization of a possibly more standard version \\\\(\\langle \\params_y,\\feats(\\x) \\rangle\\\\) where features are extracted from the input, and each output label has an own weight vector \\\\(\\params_y\\\\). It is easy to transform this representation into our formulation. The main benefit of the joint feature function approach is that generizes better to structured output spaces (e.g., you couldn't have one \\\\(\\params_y\\\\) per possible output sequence).\n\nThe classifier's prediction rule \\\\(h(\\x)\\\\) is \n$$\n  h_\\par\n  ams(\\x) = \\arg\\max_{y\\in \\mathcal{L}} s_{\\params}(\\x,y) \n$$\nwhere \\\\(\\mathcal{L}\\\\) is the set of possible class labels. To implement this model in wolfe the main tasks are to define the feature function \\\\(\\feats\\\\) and to estimate parameters \\\\(\\params\\\\).\n\n\n#### Domains\nWe will first define the [domains](/template/wolfe/wolfe-docs/concepts/01_domains) necessary for building the wolfe model. For the output domain, the set of boolean values, the built-in `Bools` domain can be used. For the input domain we use the set of all `Input` case class values. What remains to be done is the definition of a domain of feature (or weight) vectors. We give this domain the dimension 3 for now because we will first only use three features.    ",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 3,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val Inputs = Input.Values(Bools,Bools)\nval Thetas = Vectors(3)",
+      "extraFields" : {
+        "hide_output" : "true"
+      }
+    }
+  }, {
+    "id" : 4,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "\n\n#### Feature Functions\nWe now will use wolfe to define the sparse feature function \\\\(\\feats\\\\). For this we first define an index to map symbol-based vectors to integer based vectors, and then we write down the actual feature function as the sum of 3 one-hot vectors. For more details see the documentation on [sparse features](template/wolfe/wolfe-docs/concepts/05_sparse_feats).  \n",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 5,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val index = new SimpleFeatureIndex(Thetas)\n\ndef phi(x:Inputs.Term, y:Bools.Term) = \n  index.oneHot('i1, I(x.in1 && y)) +\n  index.oneHot('i2, I(x.in2 && y)) +\n  index.oneHot('bias,I(y))",
+      "extraFields" : {
+        "hide_output" : "true",
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\"]"
+      }
+    }
+  }, {
+    "id" : 6,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "We can test this feature function by evaluating it for a given (constant) input term.",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 7,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\nindex.toMap(vect)  ",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\"]"
+      }
+    }
+  }, {
+    "id" : 8,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Try to render and interact the raw vector (without the `toMap` call) to get a sense how wolfe represents vectors internally.\n\n#### Linear Model\n\nWith the feature function defined, the model definition is straight-forward.",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 9,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \n  theta dot phi(x,y)",
+      "extraFields" : {
+        "hide_output" : "true",
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \"]"
+      }
+    }
+  }, {
+    "id" : 10,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "#### Training\nWe can now estimate the parameters \\\\(\\params\\\\). We do this by defining a training objective, and then optimizing this objective. We will use the following hinge loss (with zero margin for now).\n\nMathematically the zero-margin hinge-loss objective, for a given training set \\\\(\\mathcal{D}\\\\) is defined as follows:\n$$\no(\\params) = \\sum_{(\\x_i,y_i) \\in \\mathcal{D}} s_{\\params}(\\x_i,y_i) - \\max_{y\\in\\mathcal{L}} s_{\\params}(\\x_i,y)    \n$$\nIntuitively, this objective encourages the score of the gold/true solution \\\\(y_i\\\\) to be the highest score. In this case the objective for instance \\\\(i\\\\) will be 0. You will note that this objective has a trivial solution (the zero parameter vector); however, running SGD (or variants) on it yields the perceptron algorithm, which will return a non-trivial solution.\n\nIn wolfe we can define this objective symbolically using terms. We can almost directly follow the math. As first step we need to convert our training set `train` into a term to represent \\\\(\\mathcal{D}\\\\).  ",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 11,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val D = Pairs(Inputs,Bools).Consts(and)",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\"]"
+      }
+    }
+  }, {
+    "id" : 12,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "We can now define \\\\(o\\\\) in wolfe.\n",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 13,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "def o(theta:Thetas.Term) = \n  sum(D) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val D = Pairs(Inputs,Bools).Consts(and)\"]"
+      }
+    }
+  }, {
+    "id" : 14,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "Now we define the optimal parameter vector \\\\(\\params^*\\\\) as an optimizer of the objective, and find such optimal value using adagrad. Check the section on [optimization]() for more details.",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 15,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val params = AdaGradParameters(100, 0.5) \nval thetaStar = argmax(Thetas){t => o(t)} by adaGrad(params)",
+      "extraFields" : {
+        "hide_output" : "true",
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val D = Pairs(Inputs,Bools).Consts(and)\",\"def o(theta:Thetas.Term) = \\n  sum(D) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\"]"
+      }
+    }
+  }, {
+    "id" : 16,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "At this point `thetaStar` is a symbolic description of the solution. We could plug this description into other terms and evaluate in (in some context) later, but this may lead to long computations when we don't expect it. We therefore precalculate this term right here.",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 17,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val thetaStar = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate \nindex.toMap(thetaStar.eval()) ",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val D = Pairs(Inputs,Bools).Consts(and)\",\"def o(theta:Thetas.Term) = \\n  sum(D) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\",\"val params = AdaGradParameters(100, 0.5) \\nval thetaStar = argmax(Thetas){t => o(t)} by adaGrad(params)\"]"
+      }
+    }
+  }, {
+    "id" : 18,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "#### Prediction\nThe prediction rule in wolfe can again almost be written down in math.\n",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 19,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "def h(theta:Thetas.Term)(x:Inputs.Term) = argmax(Bools) {y => s(theta)(x,y) }\ninputs map (i => i -> h(thetaStar)(Inputs.Const(i)).eval())",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val D = Pairs(Inputs,Bools).Consts(and)\",\"def o(theta:Thetas.Term) = \\n  sum(D) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\",\"val params = AdaGradParameters(100, 0.5) \\nval thetaStar = argmax(Thetas){t => o(t)} by adaGrad(params)\",\"val thetaStar = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate \\nindex.toMap(thetaStar.eval()) \"]"
+      }
+    }
+  }, {
+    "id" : 20,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "The above code can be inefficient because a new symbolic representation of the prediction rule \\\\(h\\\\) is created for each input. One way to overcome this problem is to create a `fun` function object that reuses the same symbolic expression for different input values.",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 21,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : " val hThetaStar = fun(Inputs)(x => h(thetaStar)(x))\n hThetaStar(Input(true,true)) ",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val D = Pairs(Inputs,Bools).Consts(and)\",\"def o(theta:Thetas.Term) = \\n  sum(D) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\",\"val params = AdaGradParameters(100, 0.5) \\nval thetaStar = argmax(Thetas){t => o(t)} by adaGrad(params)\",\"val thetaStar = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate \\nindex.toMap(thetaStar.eval()) \",\"def h(theta:Thetas.Term)(x:Inputs.Term) = argmax(Bools) {y => s(theta)(x,y) }\\ninputs map (i => i -> h(thetaStar)(Inputs.Const(i)).eval())\"]"
+      }
+    }
+  }, {
+    "id" : 22,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "### Enforcing a Margin\nThe zero-margin training objective works in this case, but you can see that the prediction for (true,true) is not made with much confidence.\n\n",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 23,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "s(thetaStar)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() ",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val D = Pairs(Inputs,Bools).Consts(and)\",\"def o(theta:Thetas.Term) = \\n  sum(D) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\",\"val params = AdaGradParameters(100, 0.5) \\nval thetaStar = argmax(Thetas){t => o(t)} by adaGrad(params)\",\"val thetaStar = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate \\nindex.toMap(thetaStar.eval()) \",\"def h(theta:Thetas.Term)(x:Inputs.Term) = argmax(Bools) {y => s(theta)(x,y) }\\ninputs map (i => i -> h(thetaStar)(Inputs.Const(i)).eval())\",\" val hThetaStar = fun(Inputs)(x => h(thetaStar)(x))\\n hThetaStar(Input(true,true)) \"]"
+      }
+    }
+  }, {
+    "id" : 24,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "To change this we can enforce a margin of 1 in the training objective.",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 25,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "def o(theta:Thetas.Term) = \n  sum(D) { xy => s(theta)(xy._1,xy._2) - \n                 max(Bools){y => s(theta)(xy._1,y) + I(y !== xy._2)}}\nval thetaStar = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate\ns(thetaStar)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() ",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val D = Pairs(Inputs,Bools).Consts(and)\",\"def o(theta:Thetas.Term) = \\n  sum(D) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\",\"val params = AdaGradParameters(100, 0.5) \\nval thetaStar = argmax(Thetas){t => o(t)} by adaGrad(params)\",\"val thetaStar = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate \\nindex.toMap(thetaStar.eval()) \",\"def h(theta:Thetas.Term)(x:Inputs.Term) = argmax(Bools) {y => s(theta)(x,y) }\\ninputs map (i => i -> h(thetaStar)(Inputs.Const(i)).eval())\",\" val hThetaStar = fun(Inputs)(x => h(thetaStar)(x))\\n hThetaStar(Input(true,true)) \",\"s(thetaStar)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() \"]"
+      }
+    }
+  } ],
+  "config" : { }
+}
