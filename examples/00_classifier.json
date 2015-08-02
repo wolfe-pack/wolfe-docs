@@ -108,7 +108,7 @@
     "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "val D = Pairs(Inputs,Bools).Consts(and)",
+      "code" : "val DAnd = Pairs(Inputs,Bools).Consts(and)\nval DXor = Pairs(Inputs,Bools).Consts(xor)",
       "extraFields" : {
         "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\"]"
       }
@@ -126,7 +126,7 @@
     "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "def o(theta:Thetas.Term) = \n  sum(D) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}",
+      "code" : "def o(theta:Thetas.Term) = \n  sum(DAnd) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}",
       "extraFields" : {
         "hide_output" : "true",
         "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val D = Pairs(Inputs,Bools).Consts(and)\"]"
@@ -228,7 +228,7 @@
     "compiler" : "markdown",
     "input" : {
       "sessionId" : null,
-      "code" : "To change this we can enforce a margin of 1 in the training objective.",
+      "code" : "To change this we can enforce a margin of 1 in the training objective. We also use this opportunity to parametrize the objective by an input dataset `d`. This will allow us to learn a XOR model later. ",
       "extraFields" : { }
     }
   }, {
@@ -236,9 +236,45 @@
     "compiler" : "scala",
     "input" : {
       "sessionId" : null,
-      "code" : "def o(theta:Thetas.Term) = \n  sum(D) { xy => s(theta)(xy._1,xy._2) - \n                 max(Bools){y => s(theta)(xy._1,y) + I(y !== xy._2)}}\nval thetaAndMargin = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate\ns(thetaAndMargin)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() ",
+      "code" : "def o(d:SeqTerm[Inputs.type x Bools.type])(theta:Thetas.Term) = \n  sum(d) { xy => s(theta)(xy._1,xy._2) - \n                 max(Bools){y => s(theta)(xy._1,y) + I(y !== xy._2)}}\nval thetaAndMargin = { argmax(Thetas){t => o(DAnd)(t)} by adaGrad(params) }.precalculate\ns(thetaAndMargin)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() ",
       "extraFields" : {
-        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val D = Pairs(Inputs,Bools).Consts(and)\",\"def o(theta:Thetas.Term) = \\n  sum(D) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\",\"val params = AdaGradParameters(100, 0.5) \\nval thetaAnd = argmax(Thetas){t => o(t)} by adaGrad(params)\",\"val thetaAnd = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate \\nindex.toMap(thetaAnd.eval()) \",\"def h(theta:Thetas.Term)(x:Inputs.Term) = argmax(Bools) {y => s(theta)(x,y) }\\ninputs map (i => i -> h(thetaAnd)(Inputs.Const(i)).eval())\",\" val hThetaAnd = fun(Inputs)(x => h(thetaAnd)(x))\\n hThetaAnd(Input(true,true)) \",\"s(thetaAnd)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() \"]"
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val DAnd = Pairs(Inputs,Bools).Consts(and)\\nval DXor = Pairs(Inputs,Bools).Consts(xor)\",\"def o(theta:Thetas.Term) = \\n  sum(DAnd) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\",\"val params = AdaGradParameters(100, 0.5) \\nval thetaAnd = argmax(Thetas){t => o(t)} by adaGrad(params)\",\"val thetaAnd = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate \\nindex.toMap(thetaAnd.eval()) \",\"def h(theta:Thetas.Term)(x:Inputs.Term) = argmax(Bools) {y => s(theta)(x,y) }\\ninputs map (i => i -> h(thetaAnd)(Inputs.Const(i)).eval())\",\" val hThetaAnd = fun(Inputs)(x => h(thetaAnd)(x))\\n hThetaAnd(Input(true,true)) \",\"s(thetaAnd)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() \"]"
+      }
+    }
+  }, {
+    "id" : 26,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "### Nonlinear Models\nThe linear model above works for the AND gate, but let's see how it does for XOR. \n",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 27,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "val thetaXOR = { argmax(Thetas){t => o(DXor)(t)} by adaGrad(params) }.precalculate\nval hXOR = fun(Inputs){x => argmax(Bools){y => s(thetaXOR)(x,y)}}\nval sXOR = fun(Inputs,Bools){ (x,y) => s(thetaXOR)(x,y)}\ninputs.map(i => i -> (hXOR(i),sXOR(i,true) - sXOR(i,false)))",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val DAnd = Pairs(Inputs,Bools).Consts(and)\\nval DXor = Pairs(Inputs,Bools).Consts(xor)\",\"def o(theta:Thetas.Term) = \\n  sum(DAnd) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\",\"val params = AdaGradParameters(100, 0.5) \\nval thetaAnd = argmax(Thetas){t => o(t)} by adaGrad(params)\",\"val thetaAnd = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate \\nindex.toMap(thetaAnd.eval()) \",\"def h(theta:Thetas.Term)(x:Inputs.Term) = argmax(Bools) {y => s(theta)(x,y) }\\ninputs map (i => i -> h(thetaAnd)(Inputs.Const(i)).eval())\",\" val hThetaAnd = fun(Inputs)(x => h(thetaAnd)(x))\\n hThetaAnd(Input(true,true)) \",\"s(thetaAnd)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() \",\"def o(d:SeqTerm[Inputs.type x Bools.type])(theta:Thetas.Term) = \\n  sum(d) { xy => s(theta)(xy._1,xy._2) - \\n                 max(Bools){y => s(theta)(xy._1,y) + I(y !== xy._2)}}\\nval thetaAndMargin = { argmax(Thetas){t => o(DAnd)(t)} by adaGrad(params) }.precalculate\\ns(thetaAndMargin)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() \"]"
+      }
+    }
+  }, {
+    "id" : 28,
+    "compiler" : "markdown",
+    "input" : {
+      "sessionId" : null,
+      "code" : "This isn't surprising, seeing as the XOR function isn't [linearly separable](http://www.ece.utep.edu/research/webfuzzy/docs/kk-thesis/kk-thesis-html/node19.html). \n\nThere are many ways to fix this, for example by adding a feature to the feature vector that simply fires where the XOR relation holds---in this learning is trivial. However, here we apply a non-linear (quadratic) activation function to the output of the linear model. \n\n$$\nn_{\\params}(\\x,y) = s_{\\params}(\\x,y)^2 = \\langle \\params,\\feats(\\x,y) \\rangle^2\n$$\n\nThis function can learn to identify XOR configurations because it can assign these configurations the input-activation zero, and non-XOR configurations positive or negative input activations. \n",
+      "extraFields" : { }
+    }
+  }, {
+    "id" : 29,
+    "compiler" : "scala",
+    "input" : {
+      "sessionId" : null,
+      "code" : "def n(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = sq(s(theta)(x,y))\ndef o(d:SeqTerm[Inputs.type x Bools.type])(theta:Thetas.Term) = \n  sum(d) { xy => n(theta)(xy._1,xy._2) - \n                 max(Bools){y => n(theta)(xy._1,y) + I(y !== xy._2)}}\nval nThetaXOR = { argmax(Thetas){t => o(DXor)(t)} by adaGrad(params) }.precalculate\nval hXOR = fun(Inputs){x => argmax(Bools){y => n(nThetaXOR)(x,y)}}\nval sXOR = fun(Inputs,Bools){ (x,y) => n(nThetaXOR)(x,y)}\ninputs.map(i => i -> (hXOR(i),sXOR(i,true) - sXOR(i,false))) \ns(nThetaXOR)(Inputs.Const(Input(true,true)),Bools.Const(false)).eval()",
+      "extraFields" : {
+        "aggregatedCells" : "[\"@domain case class Input(in1:Boolean, in2:Boolean)\\nval inputs = for (in1 <- IndexedSeq(false,true); \\n                  in2 <- IndexedSeq(false,true)) yield Input(in1,in2)\\n//use the facts that domains can be implicitly converted to iterables\\nval xor = inputs.map(i => i -> (i.in1 != i.in2))\\nval and = inputs.map(i => i -> (i.in1 && i.in2))\\nxor\",\"val Inputs = Input.Values(Bools,Bools)\\nval Thetas = Vectors(3)\",\"val index = new SimpleFeatureIndex(Thetas)\\n\\ndef phi(x:Inputs.Term, y:Bools.Term) = \\n  index.oneHot('i1, I(x.in1 && y)) +\\n  index.oneHot('i2, I(x.in2 && y)) +\\n  index.oneHot('bias,I(y))\",\"val vect = phi(Inputs.Const(Input(false,true)),Bools.Const(true)).eval()\\nindex.toMap(vect)  \",\"def s(theta:Thetas.Term)(x:Inputs.Term, y:Bools.Term) = \\n  theta dot phi(x,y)\",\"val DAnd = Pairs(Inputs,Bools).Consts(and)\\nval DXor = Pairs(Inputs,Bools).Consts(xor)\",\"def o(theta:Thetas.Term) = \\n  sum(DAnd) { xy => s(theta)(xy._1,xy._2) - max(Bools){y => s(theta)(xy._1,y)}}\",\"val params = AdaGradParameters(100, 0.5) \\nval thetaAnd = argmax(Thetas){t => o(t)} by adaGrad(params)\",\"val thetaAnd = { argmax(Thetas){t => o(t)} by adaGrad(params) }.precalculate \\nindex.toMap(thetaAnd.eval()) \",\"def h(theta:Thetas.Term)(x:Inputs.Term) = argmax(Bools) {y => s(theta)(x,y) }\\ninputs map (i => i -> h(thetaAnd)(Inputs.Const(i)).eval())\",\" val hThetaAnd = fun(Inputs)(x => h(thetaAnd)(x))\\n hThetaAnd(Input(true,true)) \",\"s(thetaAnd)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() \",\"def o(d:SeqTerm[Inputs.type x Bools.type])(theta:Thetas.Term) = \\n  sum(d) { xy => s(theta)(xy._1,xy._2) - \\n                 max(Bools){y => s(theta)(xy._1,y) + I(y !== xy._2)}}\\nval thetaAndMargin = { argmax(Thetas){t => o(DAnd)(t)} by adaGrad(params) }.precalculate\\ns(thetaAndMargin)(Inputs.Const(Input(true,true)),Bools.Const(true)).eval() \",\"val thetaXOR = { argmax(Thetas){t => o(DXor)(t)} by adaGrad(params) }.precalculate\\nval hXOR = fun(Inputs){x => argmax(Bools){y => s(thetaXOR)(x,y)}}\\nval sXOR = fun(Inputs,Bools){ (x,y) => s(thetaXOR)(x,y)}\\ninputs.map(i => i -> (hXOR(i),sXOR(i,true) - sXOR(i,false)))\"]"
       }
     }
   } ],
